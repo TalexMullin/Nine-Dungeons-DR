@@ -20,7 +20,8 @@ public class PlayerController : MonoBehaviour
 
     // lantern
     //public InputAction useLanternShield;
-    public bool lanternEquipped = true; //TODO: make this not public
+    // TODO: make lanternEquipped not public
+    public bool lanternEquipped = true; // true means the lantern is equipped, false means the shield is equipped.
     public bool supportItemHeld = false; // for determining action for shield and lantern.
     public GameObject lanternLightPassive;
     public GameObject lanternLightUse;
@@ -55,15 +56,44 @@ public class PlayerController : MonoBehaviour
 
 
         // for determining lantern light
-        if (Input.GetKeyDown(KeyCode.J))            // TODO: change hard coded key, change in LanternLighter as well.
+        // determine if lanternEquipped for all of these
+        if (lanternEquipped)
         {
-            Illuminate();
-            supportItemHeld = true;
+            PassiveIlluminate();
+            if (Input.GetKey(KeyCode.J))    // TODO: change hard coded key, change in LanternLighter as well.
+            {
+                Illuminate();
+            }
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                supportItemHeld = true;
+            }
+            if (Input.GetKeyUp(KeyCode.J))
+            {
+                supportItemHeld = false;
+            }
         }
-        if (Input.GetKeyUp(KeyCode.J))
+        /* TODO: currently, there are several issues with how I have programmed things.
+         * first and foremost is the hard coded letter J.
+         * second is the way the lantern light follows the player.
+         * Currently, I am creating and destroying a LanternLightHeld Prefab every frame
+         * This works, but could likely be optimized to actually follow the player.
+        */
+
+        // for swapping between lantern and shield
+        if (Input.GetKeyDown(KeyCode.I))    // TODO: change hard coded key.
         {
-            supportItemHeld = false;
+            if (lanternEquipped)
+            {
+                lanternEquipped = false;
+            } else
+            {
+                lanternEquipped = true;
+            }
         }
+
+        // for shield mechanics
+        // TODO: add shield mechanics here.
 
     }
 
@@ -97,10 +127,14 @@ public class PlayerController : MonoBehaviour
     }
 
     /*
-     * function used to create light from the lantern
+     * functions used to create light from the lantern
      */
     void Illuminate()
     {
         GameObject lanternObject = Instantiate(lanternLightUse, rigidbody2d.position, Quaternion.identity);
+    }
+    void PassiveIlluminate()
+    {
+        GameObject lanternObject = Instantiate(lanternLightPassive, rigidbody2d.position, Quaternion.identity);
     }
 }

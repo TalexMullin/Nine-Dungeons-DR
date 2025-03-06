@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3403452944325875566}
   - component: {fileID: 7679383640319808728}
+  - component: {fileID: 4599249050527828042}
   m_Layer: 0
   m_Name: LanternLightPassive
   m_TagString: Untagged
@@ -112,3 +113,15 @@ MonoBehaviour:
   - {x: 0.4157348, y: -0.27778515, z: 0}
   - {x: 0.46193978, y: -0.19134171, z: 0}
   - {x: 0.49039266, y: -0.09754512, z: 0}
+--- !u!114 &4599249050527828042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6283143124070978884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2eab57f9c590894bb01006c239fa6d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

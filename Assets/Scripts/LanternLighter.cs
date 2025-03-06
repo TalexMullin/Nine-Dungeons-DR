@@ -12,9 +12,10 @@ public class LanternLighter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.J))      //TODO: change hard coded key, also do so in PlayerController.
+        Destroy(gameObject);
+        /*if (Input.GetKeyUp(KeyCode.J))      //TODO: change hard coded key, also do so in PlayerController.
         {
             Destroy(gameObject);
-        }
+        }*/
     }
 }
