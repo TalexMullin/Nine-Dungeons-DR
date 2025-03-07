@@ -39,6 +39,13 @@ public class PlayerController : MonoBehaviour
     public bool supportItemHeld = false; // for determining action for shield and lantern.
     public GameObject lanternLightPassive;
     public GameObject lanternLightUse;
+    public int maxLanternFuel = 100;
+    int currentLanternFuel;
+    float lanternPercentIncPerSec = 0.01f;
+    int lanternFuelUsePerSec = -8;
+    float lanternFiller = 0;
+    float lanternDrainer = 0;
+    float lanternNoLightCooldown = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -46,7 +53,8 @@ public class PlayerController : MonoBehaviour
         MoveAction.Enable();
         rigidbody2d = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
-        currentMagic = 0; //TODO: change to maxMagic later.
+        currentMagic = maxMagic;
+        currentLanternFuel = maxLanternFuel;
 
         //useLanternShield.Enable();
     }
@@ -74,9 +82,18 @@ public class PlayerController : MonoBehaviour
         if (lanternEquipped)
         {
             PassiveIlluminate();
-            if (Input.GetKey(supportItemKey))    // TODO: change hard coded key, change in LanternLighter as well.
+            // ensure that the correct key is pressed and there is enough fuel. Divided by 4 to smooth out the process.
+            if (Input.GetKey(supportItemKey) && currentLanternFuel > 0)
             {
                 Illuminate();
+                // drain lantern fuel
+                // note that numbers are divided by 4 to smooth out the process.
+                lanternDrainer += Time.deltaTime;
+                if (lanternDrainer >= 0.25)
+                {
+                    ChangeLanternFuel(lanternFuelUsePerSec / 4);
+                    lanternDrainer = 0;
+                }
             }
             if (Input.GetKeyDown(supportItemKey))
             {
@@ -94,6 +111,17 @@ public class PlayerController : MonoBehaviour
          * Currently, I am creating and destroying a LanternLightHeld Prefab every frame
          * This works, but could likely be optimized to actually follow the player.
         */
+
+        // for determining if lantern fuel regens or not
+        if (((lanternEquipped && !supportItemHeld) || !lanternEquipped) && (currentLanternFuel < maxLanternFuel))
+        {
+            lanternFiller += Time.deltaTime;
+            if (lanternFiller >= 1)
+            {
+                ChangeLanternFuel(ConvertIntToOne((int)Math.Round(maxLanternFuel * (lanternPercentIncPerSec))));
+                lanternFiller = 0;    // reset lantern filler
+            }
+        }
 
         // for swapping between lantern and shield. supportItemHeld must be false to prevent movement bugs.
         if (Input.GetKeyDown(supportItemSwitchKey) && !supportItemHeld)
@@ -116,7 +144,7 @@ public class PlayerController : MonoBehaviour
             magicFiller += Time.deltaTime;
             if (magicFiller >= 1)   // hard coded number because magic will always increase per set amount of time.
             {
-                ChangeMagic((int)Math.Round(maxMagic * (magicPercentIncPerSec)));
+                ChangeMagic(ConvertIntToOne((int)Math.Round(maxMagic * (magicPercentIncPerSec))));
                 magicFiller = 0;    // reset magicFiller
             }
         }
@@ -158,7 +186,17 @@ public class PlayerController : MonoBehaviour
     {
         // make sure anything that uses magic checks if there is enough magic
         currentMagic = Mathf.Clamp(currentMagic + amount, 0, maxMagic);
-        Debug.Log("Magic is" + currentMagic + "/" + maxMagic);
+        //Debug.Log("Magic is" + currentMagic + "/" + maxMagic);
+    }
+
+
+    /*
+     * a function that changes player lantern fuel and rounds if necessary.
+     */
+    public void ChangeLanternFuel(int amount)
+    {
+        currentLanternFuel = Mathf.Clamp(currentLanternFuel + amount, 0, maxLanternFuel);
+        Debug.Log("Lantern Fuel is " + currentLanternFuel + "/" + maxLanternFuel);
     }
 
     /*
@@ -171,5 +209,18 @@ public class PlayerController : MonoBehaviour
     void PassiveIlluminate()
     {
         GameObject lanternObject = Instantiate(lanternLightPassive, rigidbody2d.position, Quaternion.identity);
+    }
+
+    /*
+     * a function that checks if an interger is < 1
+     * if it is, it converts the integer to 1
+     */
+    int ConvertIntToOne(int integer)
+    {
+        if (integer < 1)
+        {
+            integer = 1;
+        }
+        return integer;
     }
 }
