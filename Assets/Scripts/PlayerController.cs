@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
     int lanternFuelUsePerSec = -8;
     float lanternFiller = 0;
     float lanternDrainer = 0;
-    float lanternNoLightCooldown = 0;
+    //float lanternNoLightCooldown = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
         MoveAction.Enable();
         rigidbody2d = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
-        currentMagic = maxMagic;
+        currentMagic = 50;  // TODO: set to maxMagic
         currentLanternFuel = maxLanternFuel;
 
         //useLanternShield.Enable();
@@ -176,7 +176,8 @@ public class PlayerController : MonoBehaviour
         }
 
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
-        Debug.Log("Health is" + currentHealth + "/" + maxHealth);
+        HUDHandler.instance.SetHealthValue(currentHealth / (float)maxHealth);
+        //Debug.Log("Health is" + currentHealth + "/" + maxHealth);
     }
 
     /*
@@ -184,8 +185,9 @@ public class PlayerController : MonoBehaviour
      */
     public void ChangeMagic(int amount)
     {
-        // make sure anything that uses magic checks if there is enough magic
+        // make sure any items that uses magic checks if there is enough magic
         currentMagic = Mathf.Clamp(currentMagic + amount, 0, maxMagic);
+        HUDHandler.instance.SetMagicValue(currentMagic / (float)maxMagic);
         //Debug.Log("Magic is" + currentMagic + "/" + maxMagic);
     }
 
