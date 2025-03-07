@@ -1,12 +1,17 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:VisualElement name="HealthBarBackground" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/UI/Violet%20Theme%20Ui/Progress%20Bars/Progress%20Bar%20Background.png?fileID=2800000&amp;guid=3884787ef484b9641b8d705dfa15ea9d&amp;type=3#Progress Bar Background&quot;); width: 450px; height: 60px; -unity-background-scale-mode: scale-to-fit; top: 8px;">
+    <engine:VisualElement name="HealthBarBackground" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/UI/Violet%20Theme%20Ui/Progress%20Bars/Progress%20Bar%20Background.png?fileID=2800000&amp;guid=3884787ef484b9641b8d705dfa15ea9d&amp;type=3#Progress Bar Background&quot;); width: 450px; height: 60px; -unity-background-scale-mode: scale-to-fit; top: 8px; left: 8px;">
         <engine:VisualElement name="HealthBarContainer" style="flex-grow: 1; position: absolute; height: 53px; width: 415px; top: 4px; left: 17px;">
             <engine:VisualElement name="HealthBar" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Violet%20Theme%20Ui/Progress%20Bars/Progress%20Bar%20Red.png?fileID=2800000&amp;guid=1e8ffb2f21a909b46bb2883ddb8a7b21&amp;type=3#Progress Bar Red&quot;);" />
         </engine:VisualElement>
     </engine:VisualElement>
-    <engine:VisualElement name="MagicBarBackground" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/UI/Violet%20Theme%20Ui/Progress%20Bars/Progress%20Bar%20Background.png?fileID=2800000&amp;guid=3884787ef484b9641b8d705dfa15ea9d&amp;type=3#Progress Bar Background&quot;); width: 450px; height: 60px; -unity-background-scale-mode: scale-to-fit; top: 16px;">
+    <engine:VisualElement name="MagicBarBackground" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/UI/Violet%20Theme%20Ui/Progress%20Bars/Progress%20Bar%20Background.png?fileID=2800000&amp;guid=3884787ef484b9641b8d705dfa15ea9d&amp;type=3#Progress Bar Background&quot;); width: 450px; height: 60px; -unity-background-scale-mode: scale-to-fit; top: 16px; left: 8px;">
         <engine:VisualElement name="MagicBarContainer" style="flex-grow: 1; position: absolute; height: 53px; width: 415px; top: 4px; left: 17px;">
             <engine:VisualElement name="MagicBar" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Violet%20Theme%20Ui/Progress%20Bars/Progress%20Bar%20Blue.png?fileID=2800000&amp;guid=6119f52e1327e7142ace21eddd69fe50&amp;type=3#Progress Bar Blue&quot;);" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+    <engine:VisualElement name="LanternBarBackground" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/UI/Violet%20Theme%20Ui/Progress%20Bars/Progress%20Bar%20Background%20Vertical.png?fileID=2800000&amp;guid=3faa52bc3bde7894ca640bd3d36154e2&amp;type=3#Progress Bar Background Vertical&quot;); width: 20px; height: 160px; -unity-background-scale-mode: scale-to-fit; align-self: flex-end; position: absolute; top: 8px; right: 8px;">
+        <engine:VisualElement name="LanternBarContainer" style="flex-grow: 1; position: absolute; height: 140px; width: 22px; top: 10px; left: 1px;">
+            <engine:VisualElement name="LanternBar" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Violet%20Theme%20Ui/Progress%20Bars/Progress%20Bar%20Orange.png?fileID=2800000&amp;guid=b0bf94ead829fd24591a1625a292a742&amp;type=3#Progress Bar Orange&quot;); height: 140px; width: 18px;" />
         </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>

@@ -198,6 +198,7 @@ public class PlayerController : MonoBehaviour
     public void ChangeLanternFuel(int amount)
     {
         currentLanternFuel = Mathf.Clamp(currentLanternFuel + amount, 0, maxLanternFuel);
+        HUDHandler.instance.SetLanternValue(currentLanternFuel / (float)maxLanternFuel);
         Debug.Log("Lantern Fuel is " + currentLanternFuel + "/" + maxLanternFuel);
     }
 
