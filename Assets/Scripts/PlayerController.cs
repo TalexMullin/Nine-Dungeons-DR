@@ -1,8 +1,14 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    // Temporary KeyMappings
+    // TODO: these are solid at the moment, later controls should be customizable
+    KeyCode supportItemKey = KeyCode.J;
+    KeyCode supportItemSwitchKey = KeyCode.I;
+
     // Movement
     public InputAction MoveAction;
     Rigidbody2D rigidbody2d;
@@ -14,6 +20,12 @@ public class PlayerController : MonoBehaviour
     // Health
     public int maxHealth = 100;
     int currentHealth;
+
+    // magic
+    public int maxMagic = 100;  // note that calculations might not work if this number is very small
+    int currentMagic;
+    float magicPercentIncPerSec = 0.0166f;  // 0.033f fills in ~30s, 0.0166f fills in ~60s
+    float magicFiller = 0;
 
     // damage cooldown
     public float timeInvincible = 2.0f;
@@ -34,6 +46,7 @@ public class PlayerController : MonoBehaviour
         MoveAction.Enable();
         rigidbody2d = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
+        currentMagic = 0; //TODO: change to maxMagic later.
 
         //useLanternShield.Enable();
     }
@@ -56,36 +69,34 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-
         // for determining lantern light
         // determine if lanternEquipped for all of these
         if (lanternEquipped)
         {
             PassiveIlluminate();
-            if (Input.GetKey(KeyCode.J))    // TODO: change hard coded key, change in LanternLighter as well.
+            if (Input.GetKey(supportItemKey))    // TODO: change hard coded key, change in LanternLighter as well.
             {
                 Illuminate();
             }
-            if (Input.GetKeyDown(KeyCode.J))
+            if (Input.GetKeyDown(supportItemKey))
             {
                 supportItemHeld = true;
                 playerSpeed /= playerSpeedLanternReduction;   // reduce player speed when they are using the lantern.
             }
-            if (Input.GetKeyUp(KeyCode.J))
+            if (Input.GetKeyUp(supportItemKey))
             {
                 supportItemHeld = false;
                 playerSpeed *= playerSpeedLanternReduction;
             }
         }
         /* TODO: currently, there are several issues with how I have programmed things.
-         * first and foremost is the hard coded letter J.
          * second is the way the lantern light follows the player.
          * Currently, I am creating and destroying a LanternLightHeld Prefab every frame
          * This works, but could likely be optimized to actually follow the player.
         */
 
-        // for swapping between lantern and shield. supportItemHeld is false to prevent movement bugs.
-        if (Input.GetKeyDown(KeyCode.I) && !supportItemHeld)    // TODO: change hard coded key.
+        // for swapping between lantern and shield. supportItemHeld must be false to prevent movement bugs.
+        if (Input.GetKeyDown(supportItemSwitchKey) && !supportItemHeld)
         {
             if (lanternEquipped)
             {
@@ -99,6 +110,16 @@ public class PlayerController : MonoBehaviour
         // for shield mechanics
         // TODO: add shield mechanics here.
 
+        // for passive magic regeneration
+        if (currentMagic < maxMagic)
+        {
+            magicFiller += Time.deltaTime;
+            if (magicFiller >= 1)   // hard coded number because magic will always increase per set amount of time.
+            {
+                ChangeMagic((int)Math.Round(maxMagic * (magicPercentIncPerSec)));
+                magicFiller = 0;    // reset magicFiller
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -128,6 +149,16 @@ public class PlayerController : MonoBehaviour
 
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         Debug.Log("Health is" + currentHealth + "/" + maxHealth);
+    }
+
+    /*
+     * a function that changes player magic and rounds if necessary.
+     */
+    public void ChangeMagic(int amount)
+    {
+        // make sure anything that uses magic checks if there is enough magic
+        currentMagic = Mathf.Clamp(currentMagic + amount, 0, maxMagic);
+        Debug.Log("Magic is" + currentMagic + "/" + maxMagic);
     }
 
     /*
