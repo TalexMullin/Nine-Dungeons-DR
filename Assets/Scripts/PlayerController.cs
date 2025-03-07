@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
     public InputAction MoveAction;
     Rigidbody2D rigidbody2d;
     public float playerSpeed = 3.0f;
+    // playerSpeedLanternReduction divides player speed when the lantern is being used.
+    public float playerSpeedLanternReduction = 2.5f;
     Vector2 move;
 
     // Health
@@ -67,10 +69,12 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.J))
             {
                 supportItemHeld = true;
+                playerSpeed /= playerSpeedLanternReduction;   // reduce player speed when they are using the lantern.
             }
             if (Input.GetKeyUp(KeyCode.J))
             {
                 supportItemHeld = false;
+                playerSpeed *= playerSpeedLanternReduction;
             }
         }
         /* TODO: currently, there are several issues with how I have programmed things.
@@ -80,8 +84,8 @@ public class PlayerController : MonoBehaviour
          * This works, but could likely be optimized to actually follow the player.
         */
 
-        // for swapping between lantern and shield
-        if (Input.GetKeyDown(KeyCode.I))    // TODO: change hard coded key.
+        // for swapping between lantern and shield. supportItemHeld is false to prevent movement bugs.
+        if (Input.GetKeyDown(KeyCode.I) && !supportItemHeld)    // TODO: change hard coded key.
         {
             if (lanternEquipped)
             {
