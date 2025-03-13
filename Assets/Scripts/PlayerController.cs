@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
         MoveAction.Enable();
         rigidbody2d = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
-        currentMagic = 50;  // TODO: set to maxMagic
+        currentMagic = 50;  // TODO: set to maxMagic once magic items are available
         currentLanternFuel = maxLanternFuel;
 
         //useLanternShield.Enable();
@@ -186,6 +186,7 @@ public class PlayerController : MonoBehaviour
 
 
     // FixedUpdate ensures independence from framerate
+    // anything that has to do with movement and physics should go here instead of in Update
     /*
      *
      *
@@ -201,8 +202,13 @@ public class PlayerController : MonoBehaviour
          */
 
 
+        // Movement
         Vector2 position = (Vector2)rigidbody2d.position + move * playerSpeed * Time.deltaTime;
         rigidbody2d.MovePosition(position);
+
+
+
+
     }
 
 
