@@ -47,7 +47,16 @@ public class PlayerController : MonoBehaviour
     float lanternDrainer = 0;
     //float lanternNoLightCooldown = 0;
 
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    /*
+     *
+     *
+     *
+     *
+     *
+     */
     void Start()
     {
         MoveAction.Enable();
@@ -59,7 +68,16 @@ public class PlayerController : MonoBehaviour
         //useLanternShield.Enable();
     }
 
+
+
     // Update is called once per frame
+    /*
+     *
+     *
+     *
+     *
+     *
+     */
     void Update()
     {
         move = MoveAction.ReadValue<Vector2>();
@@ -150,15 +168,37 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
+
+    // FixedUpdate ensures independence from framerate
+    /*
+     *
+     *
+     *
+     *
+     *
+     */
     private void FixedUpdate()
     {
+        /*
+         * TODO: add magic and lantern increase/decrease here under FixedUpdate
+         * This will ensure that the increase/decrease will be framerate independent
+         */
+
+
         Vector2 position = (Vector2)rigidbody2d.position + move * playerSpeed * Time.deltaTime;
         rigidbody2d.MovePosition(position);
     }
 
 
-    /* 
-     * a function that changes player health and rounds if necessary
+
+    // a function that changes player health and rounds if necessary
+    /*
+     *
+     *
+     *
+     *
+     *
      */
     public void ChangeHealth(int amount)
     {
@@ -180,8 +220,15 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("Health is" + currentHealth + "/" + maxHealth);
     }
 
+
+
+    // a function that changes player magic and rounds if necessary.
     /*
-     * a function that changes player magic and rounds if necessary.
+     *
+     *
+     *
+     *
+     *
      */
     public void ChangeMagic(int amount)
     {
@@ -192,18 +239,31 @@ public class PlayerController : MonoBehaviour
     }
 
 
+
+    // a function that changes player lantern fuel and rounds if necessary.
     /*
-     * a function that changes player lantern fuel and rounds if necessary.
+     *
+     *
+     *
+     *
+     *
      */
     public void ChangeLanternFuel(int amount)
     {
         currentLanternFuel = Mathf.Clamp(currentLanternFuel + amount, 0, maxLanternFuel);
         HUDHandler.instance.SetLanternValue(currentLanternFuel / (float)maxLanternFuel);
-        Debug.Log("Lantern Fuel is " + currentLanternFuel + "/" + maxLanternFuel);
+        //Debug.Log("Lantern Fuel is " + currentLanternFuel + "/" + maxLanternFuel);
     }
 
+
+
+    // functions used to create light from the lantern
     /*
-     * functions used to create light from the lantern
+     *
+     *
+     *
+     *
+     *
      */
     void Illuminate()
     {
@@ -214,9 +274,16 @@ public class PlayerController : MonoBehaviour
         GameObject lanternObject = Instantiate(lanternLightPassive, rigidbody2d.position, Quaternion.identity);
     }
 
+
+
+    // a function that checks if an interger is < 1
+    // if it is, it converts the integer to 1
     /*
-     * a function that checks if an interger is < 1
-     * if it is, it converts the integer to 1
+     *
+     *
+     *
+     *
+     *
      */
     int ConvertIntToOne(int integer)
     {
