@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     KeyCode supportItemKey = KeyCode.J;
     KeyCode supportItemSwitchKey = KeyCode.I;
 
+
     // Movement
     public InputAction MoveAction;
     Rigidbody2D rigidbody2d;
@@ -17,9 +18,11 @@ public class PlayerController : MonoBehaviour
     public float playerSpeedLanternReduction = 2.5f;
     Vector2 move;
 
+
     // Health
     public int maxHealth = 100;
     int currentHealth;
+
 
     // magic
     public int maxMagic = 100;  // note that calculations might not work if this number is very small
@@ -27,10 +30,12 @@ public class PlayerController : MonoBehaviour
     float magicPercentIncPerSec = 0.0166f;  // 0.033f fills in ~30s, 0.0166f fills in ~60s
     float magicFiller = 0;
 
+
     // damage cooldown
     public float timeInvincible = 2.0f;
     bool isInvincible;
     float damageCooldown;
+
 
     // lantern
     //public InputAction useLanternShield;
@@ -80,10 +85,13 @@ public class PlayerController : MonoBehaviour
      */
     void Update()
     {
+
         move = MoveAction.ReadValue<Vector2>();
         //Debug.Log(move);
 
+
         //supportItemHeld = useLanternShield.ReadValue<bool>();
+
 
         //timer for determining invincibility frames;
         if (isInvincible)
@@ -94,6 +102,7 @@ public class PlayerController : MonoBehaviour
                 isInvincible = false;
             }
         }
+
 
         // for determining lantern light
         // determine if lanternEquipped for all of these
@@ -130,6 +139,7 @@ public class PlayerController : MonoBehaviour
          * This works, but could likely be optimized to actually follow the player.
         */
 
+
         // for determining if lantern fuel regens or not
         if (((lanternEquipped && !supportItemHeld) || !lanternEquipped) && (currentLanternFuel < maxLanternFuel))
         {
@@ -140,6 +150,7 @@ public class PlayerController : MonoBehaviour
                 lanternFiller = 0;    // reset lantern filler
             }
         }
+
 
         // for swapping between lantern and shield. supportItemHeld must be false to prevent movement bugs.
         if (Input.GetKeyDown(supportItemSwitchKey) && !supportItemHeld)
@@ -153,8 +164,12 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+
         // for shield mechanics
-        // TODO: add shield mechanics here.
+        /* TODO: add shield mechanics here.
+         * 
+        */
+
 
         // for passive magic regeneration
         if (currentMagic < maxMagic)

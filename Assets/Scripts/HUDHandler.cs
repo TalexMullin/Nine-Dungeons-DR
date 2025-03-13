@@ -37,19 +37,43 @@ public class HUDHandler : MonoBehaviour
         SetLanternValue(1.0f);
     }
 
+    /*
+     *
+     *
+     *
+     *
+     *
+     */
     public void SetHealthValue(float percentage)
     {
         m_Healthbar.style.width = Length.Percent(100 * percentage);
     }
 
+
+    /*
+     *
+     *
+     *
+     *
+     *
+     */
     public void SetMagicValue(float percentage)
     {
         m_Magicbar.style.width = Length.Percent(100 * percentage);
     }
 
+
+    /*
+     *
+     *
+     *
+     *
+     *
+     */
     public void SetLanternValue(float percentage)
     {
         // TODO: change this to alter height instead of width.
+        // TODO: learn exactly how unity UI Toolkit works
         m_Lanternbar.style.width = Length.Percent(100 * percentage);
     }
 }
