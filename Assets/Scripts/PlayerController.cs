@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     // Temporary KeyMappings
-    // TODO: these are solid at the moment, later controls should be customizable
+    // TODO: these are hard coded at the moment, later controls should be customizable
     KeyCode supportItemKey = KeyCode.J;
     KeyCode supportItemSwitchKey = KeyCode.I;
 
@@ -196,19 +196,9 @@ public class PlayerController : MonoBehaviour
      */
     private void FixedUpdate()
     {
-        /*
-         * TODO: add magic and lantern increase/decrease here under FixedUpdate
-         * This will ensure that the increase/decrease will be framerate independent
-         */
-
-
         // Movement
         Vector2 position = (Vector2)rigidbody2d.position + move * playerSpeed * Time.deltaTime;
         rigidbody2d.MovePosition(position);
-
-
-
-
     }
 
 
