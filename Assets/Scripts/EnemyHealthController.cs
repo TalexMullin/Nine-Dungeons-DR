@@ -20,13 +20,16 @@ public class EnemyHealthController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //timer for determining invincibility frames;
-        if (isInvincible)
+        if (!PlayerController.gamePaused)
         {
-            damageCooldown -= Time.deltaTime;
-            if (damageCooldown < 0)
+            //timer for determining invincibility frames;
+            if (isInvincible)
             {
-                isInvincible = false;
+                damageCooldown -= Time.deltaTime;
+                if (damageCooldown < 0)
+                {
+                    isInvincible = false;
+                }
             }
         }
     }

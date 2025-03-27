@@ -14,10 +14,13 @@ public class LanternLighter : MonoBehaviour
      */
     void Update()
     {
-        Destroy(gameObject);
-        /*if (Input.GetKeyUp(KeyCode.J))      //TODO: change hard coded key, also do so in PlayerController.
+        if (!PlayerController.gamePaused)
         {
             Destroy(gameObject);
-        }*/
+            /*if (Input.GetKeyUp(KeyCode.J))      //TODO: change hard coded key, also do so in PlayerController.
+            {
+                Destroy(gameObject);
+            }*/
+        }
     }
 }

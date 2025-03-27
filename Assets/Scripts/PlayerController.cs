@@ -8,6 +8,19 @@ public class PlayerController : MonoBehaviour
     // TODO: these are hard coded at the moment, later controls should be customizable
     KeyCode supportItemKey = KeyCode.J;
     KeyCode supportItemSwitchKey = KeyCode.I;
+    KeyCode pauseKey = KeyCode.Escape;
+    private static bool _gamePaused = false;
+    public static bool gamePaused
+    {
+        get
+        {
+            return _gamePaused;
+        }
+        set
+        {
+            _gamePaused = value;
+        }
+    }
 
 
     // Movement
@@ -85,101 +98,109 @@ public class PlayerController : MonoBehaviour
      */
     void Update()
     {
-
-        move = MoveAction.ReadValue<Vector2>();
-        //Debug.Log(move);
-
-
-        //supportItemHeld = useLanternShield.ReadValue<bool>();
-
-
-        //timer for determining invincibility frames;
-        if (isInvincible)
+        if (!gamePaused)
         {
-            damageCooldown -= Time.deltaTime;
-            if (damageCooldown < 0)
-            {
-                isInvincible = false;
-            }
-        }
+            move = MoveAction.ReadValue<Vector2>();
+            //Debug.Log(move);
 
 
-        // for determining lantern light
-        // determine if lanternEquipped for all of these
-        if (lanternEquipped)
-        {
-            PassiveIlluminate();
-            // ensure that the correct key is pressed and there is enough fuel. Divided by 4 to smooth out the process.
-            if (Input.GetKey(supportItemKey) && currentLanternFuel > 0)
+            //supportItemHeld = useLanternShield.ReadValue<bool>();
+
+
+            //timer for determining invincibility frames;
+            if (isInvincible)
             {
-                Illuminate();
-                // drain lantern fuel
-                // note that numbers are divided by 4 to smooth out the process.
-                lanternDrainer += Time.deltaTime;
-                if (lanternDrainer >= 0.25)
+                damageCooldown -= Time.deltaTime;
+                if (damageCooldown < 0)
                 {
-                    ChangeLanternFuel(lanternFuelUsePerSec / 4);
-                    lanternDrainer = 0;
+                    isInvincible = false;
                 }
             }
-            if (Input.GetKeyDown(supportItemKey))
-            {
-                supportItemHeld = true;
-                playerSpeed /= playerSpeedLanternReduction;   // reduce player speed when they are using the lantern.
-            }
-            if (Input.GetKeyUp(supportItemKey))
-            {
-                supportItemHeld = false;
-                playerSpeed *= playerSpeedLanternReduction;
-            }
-        }
-        /* TODO: currently, there are several issues with how I have programmed things.
-         * second is the way the lantern light follows the player.
-         * Currently, I am creating and destroying a LanternLightHeld Prefab every frame
-         * This works, but could likely be optimized to actually follow the player.
-        */
 
 
-        // for determining if lantern fuel regens or not
-        if (((lanternEquipped && !supportItemHeld) || !lanternEquipped) && (currentLanternFuel < maxLanternFuel))
-        {
-            lanternFiller += Time.deltaTime;
-            if (lanternFiller >= 1)
-            {
-                ChangeLanternFuel(ConvertIntToOne((int)Math.Round(maxLanternFuel * (lanternPercentIncPerSec))));
-                lanternFiller = 0;    // reset lantern filler
-            }
-        }
-
-
-        // for swapping between lantern and shield. supportItemHeld must be false to prevent movement bugs.
-        if (Input.GetKeyDown(supportItemSwitchKey) && !supportItemHeld)
-        {
+            // for determining lantern light
+            // determine if lanternEquipped for all of these
             if (lanternEquipped)
             {
-                lanternEquipped = false;
-            } else
-            {
-                lanternEquipped = true;
+                PassiveIlluminate();
+                // ensure that the correct key is pressed and there is enough fuel. Divided by 4 to smooth out the process.
+                if (Input.GetKey(supportItemKey) && currentLanternFuel > 0)
+                {
+                    Illuminate();
+                    // drain lantern fuel
+                    // note that numbers are divided by 4 to smooth out the process.
+                    lanternDrainer += Time.deltaTime;
+                    if (lanternDrainer >= 0.25)
+                    {
+                        ChangeLanternFuel(lanternFuelUsePerSec / 4);
+                        lanternDrainer = 0;
+                    }
+                }
+                if (Input.GetKeyDown(supportItemKey))
+                {
+                    supportItemHeld = true;
+                    playerSpeed /= playerSpeedLanternReduction;   // reduce player speed when they are using the lantern.
+                }
+                if (Input.GetKeyUp(supportItemKey))
+                {
+                    supportItemHeld = false;
+                    playerSpeed *= playerSpeedLanternReduction;
+                }
             }
-        }
+            /* TODO: currently, there are several issues with how I have programmed things.
+             * second is the way the lantern light follows the player.
+             * Currently, I am creating and destroying a LanternLightHeld Prefab every frame
+             * This works, but could likely be optimized to actually follow the player.
+            */
 
 
-        // for shield mechanics
-        /* TODO: add shield mechanics here.
-         * 
-        */
+            // for determining if lantern fuel regens or not
+            if (((lanternEquipped && !supportItemHeld) || !lanternEquipped) && (currentLanternFuel < maxLanternFuel))
+            {
+                lanternFiller += Time.deltaTime;
+                if (lanternFiller >= 1)
+                {
+                    ChangeLanternFuel(ConvertIntToOne((int)Math.Round(maxLanternFuel * (lanternPercentIncPerSec))));
+                    lanternFiller = 0;    // reset lantern filler
+                }
+            }
 
 
-        // for passive magic regeneration
-        if (currentMagic < maxMagic)
+            // for swapping between lantern and shield. supportItemHeld must be false to prevent movement bugs.
+            if (Input.GetKeyDown(supportItemSwitchKey) && !supportItemHeld)
+            {
+                if (lanternEquipped)
+                {
+                    lanternEquipped = false;
+                }
+                else
+                {
+                    lanternEquipped = true;
+                }
+            }
+
+
+            // for shield mechanics
+            /* TODO: add shield mechanics here.
+             * 
+            */
+
+
+            // for passive magic regeneration
+            if (currentMagic < maxMagic)
+            {
+                magicFiller += Time.deltaTime;
+                if (magicFiller >= 1)   // hard coded number because magic will always increase per set amount of time.
+                {
+                    ChangeMagic(ConvertIntToOne((int)Math.Round(maxMagic * (magicPercentIncPerSec))));
+                    magicFiller = 0;    // reset magicFiller
+                }
+            }
+        } // end (if !gamePaused)
+
+        if (Input.GetKeyDown(pauseKey))
         {
-            magicFiller += Time.deltaTime;
-            if (magicFiller >= 1)   // hard coded number because magic will always increase per set amount of time.
-            {
-                ChangeMagic(ConvertIntToOne((int)Math.Round(maxMagic * (magicPercentIncPerSec))));
-                magicFiller = 0;    // reset magicFiller
-            }
+            if (gamePaused) { gamePaused = false; } else if (!gamePaused) { gamePaused = true; }
         }
     }
 
@@ -196,9 +217,12 @@ public class PlayerController : MonoBehaviour
      */
     private void FixedUpdate()
     {
-        // Movement
-        Vector2 position = (Vector2)rigidbody2d.position + move * playerSpeed * Time.deltaTime;
-        rigidbody2d.MovePosition(position);
+        if (!gamePaused)
+        {
+            // Movement
+            Vector2 position = (Vector2)rigidbody2d.position + move * playerSpeed * Time.deltaTime;
+            rigidbody2d.MovePosition(position);
+        }
     }
 
 
@@ -304,4 +328,5 @@ public class PlayerController : MonoBehaviour
         }
         return integer;
     }
+
 }
