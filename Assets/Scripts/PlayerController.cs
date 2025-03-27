@@ -2,6 +2,14 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum PlayerFace
+{
+    up,
+    down,
+    left,
+    right
+}
+
 public class PlayerController : MonoBehaviour
 {
     // Temporary KeyMappings
@@ -30,6 +38,8 @@ public class PlayerController : MonoBehaviour
     // playerSpeedLanternReduction divides player speed when the lantern is being used.
     public float playerSpeedLanternReduction = 2.5f;
     Vector2 move;
+    Vector2 moveDirection = new Vector2(1, 0);
+    public PlayerFace playerFacing = PlayerFace.down;
 
 
     // Health
@@ -98,11 +108,32 @@ public class PlayerController : MonoBehaviour
      */
     void Update()
     {
+
         if (!gamePaused)
         {
             move = MoveAction.ReadValue<Vector2>();
             //Debug.Log(move);
-
+            if (!Mathf.Approximately(move.x, 0.0f) || !Mathf.Approximately(move.y, 0.0f))
+            {
+                moveDirection.Set(move.x, move.y);
+                moveDirection.Normalize();
+            }
+            // determine approximately which direction the player is facing
+            // TODO: it may be good to change this to the last button pressed rather than approx. direction.
+            if (move.y < 0)
+            {
+                playerFacing = PlayerFace.down;
+            } else if (move.y > 0)
+            {
+                playerFacing = PlayerFace.up;
+            } else if (move.x < 0)
+            {
+                playerFacing = PlayerFace.left;
+            } else if (move.x > 0)
+            {
+                playerFacing = PlayerFace.right;
+            }
+                Debug.Log(playerFacing);
 
             //supportItemHeld = useLanternShield.ReadValue<bool>();
 
@@ -205,6 +236,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        // pause the game
         if (Input.GetKeyDown(pauseKey))
         {
             if (gamePaused) { gamePaused = false; } else if (!gamePaused) { gamePaused = true; }
