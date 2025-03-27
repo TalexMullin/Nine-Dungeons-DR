@@ -136,16 +136,7 @@ public class PlayerController : MonoBehaviour
                         lanternDrainer = 0;
                     }
                 }
-                if (Input.GetKeyDown(supportItemKey))
-                {
-                    supportItemHeld = true;
-                    playerSpeed /= playerSpeedLanternReduction;   // reduce player speed when they are using the lantern.
-                }
-                if (Input.GetKeyUp(supportItemKey))
-                {
-                    supportItemHeld = false;
-                    playerSpeed *= playerSpeedLanternReduction;
-                }
+
             }
             /* TODO: currently, there are several issues with how I have programmed things.
              * second is the way the lantern light follows the player.
@@ -197,6 +188,22 @@ public class PlayerController : MonoBehaviour
                 }
             }
         } // end (if !gamePaused)
+
+
+        // reduce player movement speed while holding the lantern key, reset it on release
+        if (lanternEquipped)
+        {
+            if (Input.GetKeyDown(supportItemKey))
+            {
+                supportItemHeld = true;
+                playerSpeed /= playerSpeedLanternReduction;   // reduce player speed when they are using the lantern.
+            }
+            if (Input.GetKeyUp(supportItemKey))
+            {
+                supportItemHeld = false;
+                playerSpeed *= playerSpeedLanternReduction;
+            }
+        }
 
         if (Input.GetKeyDown(pauseKey))
         {
