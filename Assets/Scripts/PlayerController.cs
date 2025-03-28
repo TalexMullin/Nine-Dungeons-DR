@@ -2,12 +2,17 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public enum PlayerFace
+public enum PlayerFaceVert
 {
     up,
     down,
+    none
+}
+public enum PlayerFaceHor
+{
     left,
-    right
+    right,
+    none
 }
 
 public class PlayerController : MonoBehaviour
@@ -39,7 +44,8 @@ public class PlayerController : MonoBehaviour
     public float playerSpeedLanternReduction = 2.5f;
     Vector2 move;
     Vector2 moveDirection = new Vector2(1, 0);
-    public PlayerFace playerFacing = PlayerFace.down;
+    public PlayerFaceVert playerFacingVert = PlayerFaceVert.down;
+    public PlayerFaceHor playerFacingHor = PlayerFaceHor.none;
 
 
     // Health
@@ -120,20 +126,51 @@ public class PlayerController : MonoBehaviour
             }
             // determine approximately which direction the player is facing
             // TODO: it may be good to change this to the last button pressed rather than approx. direction.
-            if (move.y < 0)
+            /*if (move.y < 0)
             {
-                playerFacing = PlayerFace.down;
+                playerFacingVert = PlayerFaceVert.down;
             } else if (move.y > 0)
             {
-                playerFacing = PlayerFace.up;
+                playerFacingVert = PlayerFaceVert.up;
             } else if (move.x < 0)
             {
-                playerFacing = PlayerFace.left;
+                playerFacingVert = PlayerFaceVert.left;
             } else if (move.x > 0)
             {
-                playerFacing = PlayerFace.right;
+                playerFacingVert = PlayerFaceVert.right;
+            }*/
+
+            // ensure the player is not standing still before changing direction
+            // this way, the player is still marked as facing a direction
+            if (!(move.y == 0 && move.x == 0)) {
+                // find player vertical direction
+                switch (move.y)
+                {
+                    case < 0:
+                        playerFacingVert = PlayerFaceVert.down;
+                        break;
+                    case > 0:
+                        playerFacingVert = PlayerFaceVert.up;
+                        break;
+                    default:
+                        playerFacingVert = PlayerFaceVert.none;
+                        break;
+                }
+                // find player horizontal direction
+                switch (move.x)
+                {
+                    case < 0:
+                        playerFacingHor = PlayerFaceHor.left;
+                        break;
+                    case > 0:
+                        playerFacingHor = PlayerFaceHor.right;
+                        break;
+                    default:
+                        playerFacingHor = PlayerFaceHor.none;
+                        break;
+                }
             }
-                Debug.Log(playerFacing);
+            //Debug.Log("vertical direction: " + playerFacingVert +"\nhorizontal direction: " + playerFacingHor);
 
             //supportItemHeld = useLanternShield.ReadValue<bool>();
 
