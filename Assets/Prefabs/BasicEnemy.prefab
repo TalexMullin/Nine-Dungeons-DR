@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5788017875047533876}
   - component: {fileID: 3834955394485859957}
   - component: {fileID: 2465860258201076458}
+  - component: {fileID: 5495915707942503875}
   m_Layer: 11
   m_Name: BasicEnemy
   m_TagString: Untagged
@@ -181,6 +182,21 @@ MonoBehaviour:
   direction: 1
   timerMin: 1
   timerMax: 5
+--- !u!114 &5495915707942503875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5596379225725011198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b70f6a132c87af4da41b92ce883e4f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 10
+  currentHealth: 0
+  timeInvincible: 1
 --- !u!1 &6702892915028816662
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,7 +209,7 @@ GameObject:
   - component: {fileID: 6511592104224834586}
   - component: {fileID: 6712160903158543086}
   - component: {fileID: 5799093810406991001}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: EnemyDamageZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
