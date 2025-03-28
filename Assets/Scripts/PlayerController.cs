@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     KeyCode supportItemKey = KeyCode.J;
     KeyCode supportItemSwitchKey = KeyCode.I;
     KeyCode pauseKey = KeyCode.Escape;
+    KeyCode attackKey = KeyCode.Space;
     private static bool _gamePaused = false;
     public static bool gamePaused
     {
@@ -81,6 +82,12 @@ public class PlayerController : MonoBehaviour
     float lanternDrainer = 0;
     //float lanternNoLightCooldown = 0;
 
+    // combat
+    public GameObject swordPrefab;
+    GameObject sword;
+    public float attackCooldownAmount = 0.5f;
+    float attackCooldownTimer;
+    bool attackOnCooldown;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -255,6 +262,15 @@ public class PlayerController : MonoBehaviour
                     magicFiller = 0;    // reset magicFiller
                 }
             }
+
+
+            // attack with the sword
+            if (Input.GetKeyDown(attackKey) && !attackOnCooldown)
+            {
+                attackCooldownTimer = attackCooldownAmount;
+                sword = Instantiate(swordPrefab, rigidbody2d.position, Quaternion.identity) as GameObject;
+            }
+
         } // end (if !gamePaused)
 
 
@@ -404,5 +420,4 @@ public class PlayerController : MonoBehaviour
         }
         return integer;
     }
-
 }
