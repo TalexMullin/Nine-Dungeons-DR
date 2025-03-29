@@ -128,7 +128,15 @@ public class PlayerController : MonoBehaviour
 
         if (!gamePaused)
         {
-            move = MoveAction.ReadValue<Vector2>();
+            // halt movement if attacking
+            if (attackOnCooldown)
+            {
+                move = new Vector2(0, 0);
+                
+            } else
+            {
+                move = MoveAction.ReadValue<Vector2>();
+            }
             //Debug.Log(move);
             if (!Mathf.Approximately(move.x, 0.0f) || !Mathf.Approximately(move.y, 0.0f))
             {
