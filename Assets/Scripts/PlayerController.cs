@@ -267,7 +267,7 @@ public class PlayerController : MonoBehaviour
 
 
             // attack with the sword
-            if (Input.GetKeyDown(attackKey) && !attackOnCooldown)
+            if (Input.GetKeyDown(attackKey) && !attackOnCooldown && !supportItemHeld)
             {
                 Vector2 swordLocation = rigidbody2d.position;
                 float angle = 0.0f;
@@ -292,6 +292,8 @@ public class PlayerController : MonoBehaviour
                         break;
                 }
                 // get sword angle
+                // TODO: Consider angeling sword
+                // an invisible child object will have to rotate as the sword's rotation point is in the center
                 if (playerFacingHor == PlayerFaceHor.left)
                 {
                     if (playerFacingVert == PlayerFaceVert.up) // angle left up
