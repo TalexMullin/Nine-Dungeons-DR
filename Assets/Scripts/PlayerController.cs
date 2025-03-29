@@ -97,6 +97,7 @@ public class PlayerController : MonoBehaviour
     public float swordDistanceUp = 1.0f;
     public float swordDistanceDown = -1.0f;
     public float swordDistanceLeftRight = 1.0f;
+    public float initialSwingAngle = 0.0f;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -270,7 +271,8 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(attackKey) && !attackOnCooldown && !supportItemHeld)
             {
                 Vector2 swordLocation = rigidbody2d.position;
-                float angle = 0.0f;
+                float angle = initialSwingAngle;
+                //float swingAngle = -2 * angle;
                 // TODO: change sword location based off of player direction
                 // get sword location
                 switch (playerFacingVert)
@@ -298,41 +300,41 @@ public class PlayerController : MonoBehaviour
                 {
                     if (playerFacingVert == PlayerFaceVert.up) // angle left up
                     {
-                        angle = 45.0f;
+                        angle += 45.0f;
                     }
                     else if (playerFacingVert == PlayerFaceVert.down) // angle left down
                     {
-                        angle = 135.0f;
+                        angle += 135.0f;
                     }
                     else // angle straight left
                     {
-                        angle = 90.0f;
+                        angle += 90.0f;
                     }
                 }
                 else if (playerFacingHor == PlayerFaceHor.right)
                 {
                     if (playerFacingVert == PlayerFaceVert.up) // angle right up
                     {
-                        angle = 315.0f;
+                        angle += 315.0f;
                     }
                     else if (playerFacingVert == PlayerFaceVert.down) // angle right down
                     {
-                        angle = 225.0f;
+                        angle += 225.0f;
                     }
                     else // angle right
                     {
-                        angle = 270.0f;
+                        angle += 270.0f;
                     }
                 }
                 else if (playerFacingVert == PlayerFaceVert.down) // angle down
                 {
-                    angle = 180.0f;
+                    angle += 180.0f;
                 }
-                // nothing for angle down, as it is by default 0.0f
+                // nothing for angle down, as it is the default
 
-                    // instantiante the sword using angle and location
-                    sword = Instantiate(swordPrefab, swordLocation, Quaternion.Euler(0, 0, angle)) as GameObject;
-                SwordSwing.GetSwingDuration(attackCooldownAmount);
+                // instantiante the sword using angle and location
+                sword = Instantiate(swordPrefab, swordLocation, Quaternion.Euler(0, 0, angle)) as GameObject;
+                SwordSwing.GetSwingDurationAndAngle(attackCooldownAmount);//, swingAngle);
                 attackOnCooldown = true;
             }
             if (attackOnCooldown)

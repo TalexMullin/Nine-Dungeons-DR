@@ -232,13 +232,15 @@ MonoBehaviour:
   maxHealth: 100
   maxMagic: 100
   timeInvincible: 2
-  lanternEquipped: 1
-  supportItemHeld: 0
   lanternLightPassive: {fileID: 6283143124070978884, guid: fd519e1e6dc68084ca7a9da46e6f8fc2, type: 3}
   lanternLightUse: {fileID: 5411506318014606037, guid: 6dd2275ab105285448cde7961586cbab, type: 3}
   maxLanternFuel: 100
-  swordPrefab: {fileID: 1825788543259668088, guid: 874a4d18f0cca5a469774a83650f0159, type: 3}
+  swordPrefab: {fileID: 1041416049179850807, guid: 874a4d18f0cca5a469774a83650f0159, type: 3}
   attackCooldownAmount: 0.5
+  swordDistanceUp: 0.5
+  swordDistanceDown: -0.5
+  swordDistanceLeftRight: 0.5
+  initialSwingAngle: 0
 --- !u!1 &5961912955571688422
 GameObject:
   m_ObjectHideFlags: 0
