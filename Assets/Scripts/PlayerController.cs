@@ -72,9 +72,8 @@ public class PlayerController : MonoBehaviour
     [Header("Lantern")]
     // lantern
     //public InputAction useLanternShield;
-    // TODO: make lanternEquipped not public
-    public bool lanternEquipped = true; // true means the lantern is equipped, false means the shield is equipped.
-    public bool supportItemHeld = false; // for determining action for shield and lantern.
+    bool lanternEquipped = true; // true means the lantern is equipped, false means the shield is equipped.
+    bool supportItemHeld = false; // for determining action for shield and lantern.
     public GameObject lanternLightPassive;
     public GameObject lanternLightUse;
     public int maxLanternFuel = 100;
@@ -137,21 +136,6 @@ public class PlayerController : MonoBehaviour
                 moveDirection.Normalize();
             }
             // determine approximately which direction the player is facing
-            // TODO: it may be good to change this to the last button pressed rather than approx. direction.
-            /*if (move.y < 0)
-            {
-                playerFacingVert = PlayerFaceVert.down;
-            } else if (move.y > 0)
-            {
-                playerFacingVert = PlayerFaceVert.up;
-            } else if (move.x < 0)
-            {
-                playerFacingVert = PlayerFaceVert.left;
-            } else if (move.x > 0)
-            {
-                playerFacingVert = PlayerFaceVert.right;
-            }*/
-
             // ensure the player is not standing still before changing direction
             // this way, the player is still marked as facing a direction
             if (!(move.y == 0 && move.x == 0)) {
@@ -219,9 +203,9 @@ public class PlayerController : MonoBehaviour
 
             }
             /* TODO: currently, there are several issues with how I have programmed things.
-             * second is the way the lantern light follows the player.
+             * primarily is the way the lantern light follows the player.
              * Currently, I am creating and destroying a LanternLightHeld Prefab every frame
-             * This works, but could likely be optimized to actually follow the player.
+             * This works, but could be optimized to actually follow the player.
             */
 
 
