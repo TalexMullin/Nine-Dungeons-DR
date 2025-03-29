@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
 
 
     // Movement
+    [Header("Movement")]
     public InputAction MoveAction;
     Rigidbody2D rigidbody2d;
     public float playerSpeed = 3.0f;
@@ -48,6 +49,8 @@ public class PlayerController : MonoBehaviour
     public PlayerFaceVert playerFacingVert = PlayerFaceVert.down;
     public PlayerFaceHor playerFacingHor = PlayerFaceHor.none;
 
+
+    [Header("Health and Resources")]
 
     // Health
     public int maxHealth = 100;
@@ -66,7 +69,7 @@ public class PlayerController : MonoBehaviour
     bool isInvincible;
     float damageCooldown;
 
-
+    [Header("Lantern")]
     // lantern
     //public InputAction useLanternShield;
     // TODO: make lanternEquipped not public
@@ -82,12 +85,14 @@ public class PlayerController : MonoBehaviour
     float lanternDrainer = 0;
     //float lanternNoLightCooldown = 0;
 
+
+    [Header("Combat")]
     // combat
     public GameObject swordPrefab;
     GameObject sword;
     public float attackCooldownAmount = 0.5f;
-    float attackCooldownTimer;
-    bool attackOnCooldown;
+    float attackCooldownTimer = 0;
+    bool attackOnCooldown = false;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -267,8 +272,19 @@ public class PlayerController : MonoBehaviour
             // attack with the sword
             if (Input.GetKeyDown(attackKey) && !attackOnCooldown)
             {
-                attackCooldownTimer = attackCooldownAmount;
-                sword = Instantiate(swordPrefab, rigidbody2d.position, Quaternion.identity) as GameObject;
+                Vector2 swordLocation = rigidbody2d.position;
+                // TODO: change sword location based off of player direction
+                sword = Instantiate(swordPrefab, swordLocation, Quaternion.identity) as GameObject;
+                attackOnCooldown = true;
+            }
+            if (attackOnCooldown)
+            {
+                attackCooldownTimer += Time.deltaTime;
+                if (attackCooldownTimer >= attackCooldownAmount)
+                {
+                    attackOnCooldown = false;
+                    attackCooldownTimer = 0;
+                }
             }
 
         } // end (if !gamePaused)
