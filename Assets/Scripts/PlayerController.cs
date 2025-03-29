@@ -93,6 +93,11 @@ public class PlayerController : MonoBehaviour
     float attackCooldownTimer = 0;
     bool attackOnCooldown = false;
 
+    [Header("SwordVariables")]
+    public float swordDistanceUp = 1.0f;
+    public float swordDistanceDown = -1.0f;
+    public float swordDistanceLeftRight = 1.0f;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     /*
@@ -266,7 +271,26 @@ public class PlayerController : MonoBehaviour
             {
                 Vector2 swordLocation = rigidbody2d.position;
                 // TODO: change sword location based off of player direction
+                switch (playerFacingVert)
+                {
+                    case PlayerFaceVert.up:
+                        swordLocation.y += swordDistanceUp;
+                        break;
+                    case PlayerFaceVert.down:
+                        swordLocation.y += swordDistanceDown;
+                        break;
+                }
+                switch (playerFacingHor)
+                {
+                    case PlayerFaceHor.right:
+                        swordLocation.x += swordDistanceLeftRight;
+                        break;
+                    case PlayerFaceHor.left:
+                        swordLocation.x -= swordDistanceLeftRight;
+                        break;
+                }
                 sword = Instantiate(swordPrefab, swordLocation, Quaternion.identity) as GameObject;
+                SwordSwing.GetSwingDuration(attackCooldownAmount);
                 attackOnCooldown = true;
             }
             if (attackOnCooldown)

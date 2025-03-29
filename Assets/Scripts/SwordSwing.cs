@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SwordSwing : MonoBehaviour
 {
-    public float swingDuration = 0.5f;
+    public static float swingDuration = 1.0f;
     float swingTimer = 0.0f;
 
     // Update is called once per frame
@@ -18,8 +18,8 @@ public class SwordSwing : MonoBehaviour
         }
     }
 
-    public void GetSwingDuration(float amount)
+    public static void GetSwingDuration(float amount)
     {
-        this.swingDuration = amount;
+        swingDuration = amount;
     }
 }
