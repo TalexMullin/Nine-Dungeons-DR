@@ -270,7 +270,9 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(attackKey) && !attackOnCooldown)
             {
                 Vector2 swordLocation = rigidbody2d.position;
+                float angle = 0.0f;
                 // TODO: change sword location based off of player direction
+                // get sword location
                 switch (playerFacingVert)
                 {
                     case PlayerFaceVert.up:
@@ -289,7 +291,45 @@ public class PlayerController : MonoBehaviour
                         swordLocation.x -= swordDistanceLeftRight;
                         break;
                 }
-                sword = Instantiate(swordPrefab, swordLocation, Quaternion.identity) as GameObject;
+                // get sword angle
+                if (playerFacingHor == PlayerFaceHor.left)
+                {
+                    if (playerFacingVert == PlayerFaceVert.up) // angle left up
+                    {
+                        angle = 45.0f;
+                    }
+                    else if (playerFacingVert == PlayerFaceVert.down) // angle left down
+                    {
+                        angle = 135.0f;
+                    }
+                    else // angle straight left
+                    {
+                        angle = 90.0f;
+                    }
+                }
+                else if (playerFacingHor == PlayerFaceHor.right)
+                {
+                    if (playerFacingVert == PlayerFaceVert.up) // angle right up
+                    {
+                        angle = 315.0f;
+                    }
+                    else if (playerFacingVert == PlayerFaceVert.down) // angle right down
+                    {
+                        angle = 225.0f;
+                    }
+                    else // angle right
+                    {
+                        angle = 270.0f;
+                    }
+                }
+                else if (playerFacingVert == PlayerFaceVert.down) // angle down
+                {
+                    angle = 180.0f;
+                }
+                // nothing for angle down, as it is by default 0.0f
+
+                    // instantiante the sword using angle and location
+                    sword = Instantiate(swordPrefab, swordLocation, Quaternion.Euler(0, 0, angle)) as GameObject;
                 SwordSwing.GetSwingDuration(attackCooldownAmount);
                 attackOnCooldown = true;
             }
