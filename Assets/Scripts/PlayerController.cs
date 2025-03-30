@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviour
         MoveAction.Enable();
         rigidbody2d = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
-        currentMagic = 50;  // TODO: set to maxMagic once magic items are available
+        currentMagic = 0;  // TODO: set to maxMagic once magic items are available
         currentLanternFuel = maxLanternFuel;
 
         //useLanternShield.Enable();

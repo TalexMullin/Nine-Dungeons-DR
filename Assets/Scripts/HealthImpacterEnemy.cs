@@ -33,13 +33,16 @@ public class HealthImpacterEnemy : MonoBehaviour
      */
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (!enterOrNot)
+        if (!PlayerController.gamePaused)
         {
-            EnemyHealthController controller = collision.GetComponent<EnemyHealthController>();
-
-            if (controller != null)
+            if (!enterOrNot)
             {
-                controller.ChangeHealth(healthChangeAmount);
+                EnemyHealthController controller = collision.GetComponent<EnemyHealthController>();
+
+                if (controller != null)
+                {
+                    controller.ChangeHealth(healthChangeAmount);
+                }
             }
         }
     }
