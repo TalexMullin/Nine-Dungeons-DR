@@ -192,5 +192,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6e45ab607869474cab80a6c8867e5db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enterOrNot: 0
+  enterOrNot: 1
   healthChangeAmount: -5

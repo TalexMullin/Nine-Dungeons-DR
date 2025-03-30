@@ -58,6 +58,11 @@ public class EnemyHealthController : MonoBehaviour
         }
 
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
-        Debug.Log("Health is" + currentHealth + "/" + maxHealth);
+
+        if (currentHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
+        //Debug.Log("Health is" + currentHealth + "/" + maxHealth);
     }
 }
