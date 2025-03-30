@@ -46,8 +46,8 @@ public class PlayerController : MonoBehaviour
     public float playerSpeedLanternReduction = 2.5f;
     Vector2 move;
     Vector2 moveDirection = new Vector2(1, 0);
-    public PlayerFaceVert playerFacingVert = PlayerFaceVert.down;
-    public PlayerFaceHor playerFacingHor = PlayerFaceHor.none;
+    PlayerFaceVert playerFacingVert = PlayerFaceVert.down;
+    PlayerFaceHor playerFacingHor = PlayerFaceHor.none;
 
 
     [Header("Health and Resources")]
@@ -202,7 +202,7 @@ public class PlayerController : MonoBehaviour
             {
                 PassiveIlluminate();
                 // ensure that the correct key is pressed and there is enough fuel. Divided by 4 to smooth out the process.
-                if (Input.GetKey(supportItemKey) && currentLanternFuel > 0)
+                if (Input.GetKey(supportItemKey) && currentLanternFuel > 0 && attackCooldownTimer == 0)
                 {
                     Illuminate();
                     // drain lantern fuel
