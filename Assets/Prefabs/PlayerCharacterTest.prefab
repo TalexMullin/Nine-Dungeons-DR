@@ -227,8 +227,6 @@ MonoBehaviour:
     m_Flags: 0
   playerSpeed: 7
   playerSpeedLanternReduction: 2.5
-  playerFacingVert: 1
-  playerFacingHor: 2
   maxHealth: 100
   maxMagic: 100
   timeInvincible: 2
@@ -236,11 +234,11 @@ MonoBehaviour:
   lanternLightUse: {fileID: 5411506318014606037, guid: 6dd2275ab105285448cde7961586cbab, type: 3}
   maxLanternFuel: 100
   swordPrefab: {fileID: 1041416049179850807, guid: 874a4d18f0cca5a469774a83650f0159, type: 3}
-  attackCooldownAmount: 0.5
+  attackCooldownAmount: 0.25
   swordDistanceUp: 0.5
   swordDistanceDown: -0.5
   swordDistanceLeftRight: 0.5
-  initialSwingAngle: 0
+  initialSwingAngle: 60
 --- !u!1 &5961912955571688422
 GameObject:
   m_ObjectHideFlags: 0

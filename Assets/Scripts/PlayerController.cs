@@ -272,7 +272,7 @@ public class PlayerController : MonoBehaviour
             {
                 Vector2 swordLocation = rigidbody2d.position;
                 float angle = initialSwingAngle;
-                //float swingAngle = -2 * angle;
+                float swingAngle = -2 * angle;
                 // TODO: change sword location based off of player direction
                 // get sword location
                 switch (playerFacingVert)
@@ -334,7 +334,7 @@ public class PlayerController : MonoBehaviour
 
                 // instantiante the sword using angle and location
                 sword = Instantiate(swordPrefab, swordLocation, Quaternion.Euler(0, 0, angle)) as GameObject;
-                SwordSwing.GetSwingDurationAndAngle(attackCooldownAmount);//, swingAngle);
+                SwordSwing.GetSwingDurationAndAngle(attackCooldownAmount, swingAngle, angle);
                 attackOnCooldown = true;
             }
             if (attackOnCooldown)
