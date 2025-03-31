@@ -235,9 +235,10 @@ MonoBehaviour:
   maxLanternFuel: 100
   swordPrefab: {fileID: 1041416049179850807, guid: 874a4d18f0cca5a469774a83650f0159, type: 3}
   attackCooldownAmount: 0.25
-  swordDistanceUp: 0.5
-  swordDistanceDown: -0.5
-  swordDistanceLeftRight: 0.5
+  swordDistanceDownOffset: 0.17
+  swordDistanceUp: 0.1
+  swordDistanceDown: 0.43
+  swordDistanceLeftRight: 0.33
   initialSwingAngle: 60
 --- !u!1 &5961912955571688422
 GameObject:

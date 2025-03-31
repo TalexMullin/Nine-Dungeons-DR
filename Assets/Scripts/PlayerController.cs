@@ -94,8 +94,9 @@ public class PlayerController : MonoBehaviour
     bool attackOnCooldown = false;
 
     [Header("SwordVariables")]
+    public float swordDistanceDownOffset = 0.5f;
     public float swordDistanceUp = 1.0f;
-    public float swordDistanceDown = -1.0f;
+    public float swordDistanceDown = 1.0f;
     public float swordDistanceLeftRight = 1.0f;
     public float initialSwingAngle = 0.0f;
 
@@ -281,7 +282,11 @@ public class PlayerController : MonoBehaviour
                         swordLocation.y += swordDistanceUp;
                         break;
                     case PlayerFaceVert.down:
-                        swordLocation.y += swordDistanceDown;
+                        swordLocation.y -= swordDistanceDown;
+                        break;
+                    // offset for if the player is facing straight left or stright right
+                    case PlayerFaceVert.none:
+                        swordLocation.y -= swordDistanceDownOffset;
                         break;
                 }
                 switch (playerFacingHor)

@@ -136,6 +136,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerCharacterTest
       objectReference: {fileID: 0}
+    - target: {fileID: 3150088073862586625, guid: ecedfea7cace15f449c914ef88cad4e7, type: 3}
+      propertyPath: swordDistanceDownOffset
+      value: -0.43
+      objectReference: {fileID: 0}
     - target: {fileID: 5195350173547996830, guid: ecedfea7cace15f449c914ef88cad4e7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.8
