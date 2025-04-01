@@ -19,8 +19,6 @@ public class HealthImpacter : MonoBehaviour
                     controller.ChangeHealth(healthChangeAmount);
                 }
             }
-
-
         }
     }
 

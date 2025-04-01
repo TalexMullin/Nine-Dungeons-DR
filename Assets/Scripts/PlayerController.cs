@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
     public InputAction MoveAction;
     Rigidbody2D rigidbody2d;
     public float playerSpeed = 3.0f;
-    public float playerSpeedTemp;
+    float playerSpeedTemp;
     // playerSpeedLanternReduction divides player speed when the lantern is being used.
     public float playerSpeedLanternReduction = 2.5f;
     Vector2 move;
@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
     // lantern
     //public InputAction useLanternShield;
     bool lanternEquipped = false; // true means the lantern is equipped, false means the shield is equipped.
-    bool supportItemHeld = false; // for determining action for shield and lantern.
+    public static bool supportItemHeld = false; // for determining action for shield and lantern.
     public GameObject lanternLightPassive;
     public GameObject lanternLightUse;
     public int maxLanternFuel = 100;
@@ -84,6 +84,12 @@ public class PlayerController : MonoBehaviour
     float lanternFiller = 0;
     float lanternDrainer = 0;
     //float lanternNoLightCooldown = 0;
+
+    // shield
+    public float maxShieldHealth = 4.0f;
+    float currentShieldHealth;
+    public float shieldHealthLossOnBlock = 1.0f;   // lose one block upon blocking
+    public float shieldHealthGainOnSwordAttack = 0.25f;
 
 
     [Header("Combat")]
@@ -117,6 +123,7 @@ public class PlayerController : MonoBehaviour
         currentHealth = maxHealth;
         currentMagic = 0;  // TODO: set to maxMagic once magic items are available
         currentLanternFuel = maxLanternFuel;
+        currentShieldHealth = maxShieldHealth;
 
         //useLanternShield.Enable();
     }
@@ -463,6 +470,21 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("Magic is" + currentMagic + "/" + maxMagic);
     }
 
+
+    // a function that changes shield health
+    /*
+     *
+     *
+     *
+     *
+     *
+     */
+    public void ChangeShieldHealth(float amount)
+    {
+        currentShieldHealth = Mathf.Clamp(currentShieldHealth + amount, 0, maxShieldHealth);
+        // TODO: HUDHandler
+        Debug.Log("Shield health is at " + currentShieldHealth + "/" + maxShieldHealth);
+    }
 
 
     // a function that changes player lantern fuel and rounds if necessary.
