@@ -86,10 +86,10 @@ public class PlayerController : MonoBehaviour
     //float lanternNoLightCooldown = 0;
 
     // shield
-    public float maxShieldHealth = 4.0f;
-    float currentShieldHealth;
+    public static float maxShieldHealth = 4.0f;
+    static float currentShieldHealth;
     public float shieldHealthLossOnBlock = 1.0f;   // lose one block upon blocking
-    public float shieldHealthGainOnSwordAttack = 0.25f;
+    public static float shieldHealthGainOnSwordAttack = 0.25f;
 
 
     [Header("Combat")]
@@ -123,7 +123,7 @@ public class PlayerController : MonoBehaviour
         currentHealth = maxHealth;
         currentMagic = 0;  // TODO: set to maxMagic once magic items are available
         currentLanternFuel = maxLanternFuel;
-        currentShieldHealth = maxShieldHealth;
+        currentShieldHealth = 0.0f;//maxShieldHealth;
 
         //useLanternShield.Enable();
     }
@@ -479,10 +479,10 @@ public class PlayerController : MonoBehaviour
      *
      *
      */
-    public void ChangeShieldHealth(float amount)
+    public static void ChangeShieldHealth(float amount)
     {
         currentShieldHealth = Mathf.Clamp(currentShieldHealth + amount, 0, maxShieldHealth);
-        // TODO: HUDHandler
+        HUDHandler.instance.SetShieldValue(currentShieldHealth / maxShieldHealth);
         Debug.Log("Shield health is at " + currentShieldHealth + "/" + maxShieldHealth);
     }
 

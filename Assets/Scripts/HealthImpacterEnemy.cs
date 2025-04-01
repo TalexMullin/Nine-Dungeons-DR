@@ -17,6 +17,7 @@ public class HealthImpacterEnemy : MonoBehaviour
                 if (controller != null)
                 {
                     controller.ChangeHealth(healthChangeAmount);
+                    PlayerController.ChangeShieldHealth(PlayerController.shieldHealthGainOnSwordAttack);
                 }
             }
         }
@@ -42,6 +43,7 @@ public class HealthImpacterEnemy : MonoBehaviour
                 if (controller != null)
                 {
                     controller.ChangeHealth(healthChangeAmount);
+                    PlayerController.ChangeShieldHealth(PlayerController.shieldHealthGainOnSwordAttack);
                 }
             }
         }

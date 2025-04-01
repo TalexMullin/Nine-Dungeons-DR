@@ -10,6 +10,7 @@ public class HUDHandler : MonoBehaviour
     private VisualElement m_Healthbar;
     private VisualElement m_Magicbar;
     private VisualElement m_Lanternbar;
+    private VisualElement m_Shieldbar;
 
     private void Awake()
     {
@@ -35,6 +36,9 @@ public class HUDHandler : MonoBehaviour
 
         m_Lanternbar = uiDocument.rootVisualElement.Q<VisualElement>("LanternBar");
         SetLanternValue(1.0f);
+
+        m_Shieldbar = uiDocument.rootVisualElement.Q<VisualElement>("ShieldBar");
+        SetShieldValue(1.0f);
     }
 
     /*
@@ -75,5 +79,18 @@ public class HUDHandler : MonoBehaviour
         // TODO: change this to alter height instead of width.
         // TODO: learn exactly how unity UI Toolkit works
         m_Lanternbar.style.width = Length.Percent(100 * percentage);
+    }
+
+
+    /*
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public void SetShieldValue(float percentage)
+    {
+        m_Shieldbar.style.width = Length.Percent(100 * percentage);
     }
 }
