@@ -11,11 +11,19 @@ public class EnemyHealthController : MonoBehaviour
     bool isInvincible;
     float damageCooldown;
 
+    Rigidbody2D rigidbody2d;
+
+    // item drops
+    GameObject itemDrop;
+    public GameObject[] itemDropsList;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         currentHealth = maxHealth;
+        rigidbody2d = GetComponent<Rigidbody2D>();
     }
+
 
     // Update is called once per frame
     void Update()
@@ -61,6 +69,14 @@ public class EnemyHealthController : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            // get random item drop
+            int dropNumber = Random.Range(0, itemDropsList.Length);
+            itemDrop = itemDropsList[dropNumber];
+            Vector2 dropLocation = rigidbody2d.position;
+            if (itemDrop != null)
+            {
+                itemDrop = Instantiate(itemDrop, dropLocation, Quaternion.identity) as GameObject;
+            }
             Destroy(gameObject);
         }
         //Debug.Log("Health is" + currentHealth + "/" + maxHealth);
