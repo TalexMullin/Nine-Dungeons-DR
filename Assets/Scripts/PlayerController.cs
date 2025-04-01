@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
     public InputAction MoveAction;
     Rigidbody2D rigidbody2d;
     public float playerSpeed = 3.0f;
+    public float playerSpeedTemp;
     // playerSpeedLanternReduction divides player speed when the lantern is being used.
     public float playerSpeedLanternReduction = 2.5f;
     Vector2 move;
@@ -69,10 +70,10 @@ public class PlayerController : MonoBehaviour
     bool isInvincible;
     float damageCooldown;
 
-    [Header("Lantern")]
+    [Header("Lantern and Shield")]
     // lantern
     //public InputAction useLanternShield;
-    bool lanternEquipped = true; // true means the lantern is equipped, false means the shield is equipped.
+    bool lanternEquipped = false; // true means the lantern is equipped, false means the shield is equipped.
     bool supportItemHeld = false; // for determining action for shield and lantern.
     public GameObject lanternLightPassive;
     public GameObject lanternLightUse;
@@ -367,6 +368,22 @@ public class PlayerController : MonoBehaviour
             {
                 supportItemHeld = false;
                 playerSpeed *= playerSpeedLanternReduction;
+            }
+        }
+
+        // halt player movement speed while holding the shield key, reset it on release
+        if (!lanternEquipped)
+        {
+            if (Input.GetKeyDown(supportItemKey))
+            {
+                supportItemHeld = true;
+                playerSpeedTemp = playerSpeed;
+                playerSpeed = 0;
+            }
+            if (Input.GetKeyUp(supportItemKey))
+            {
+                supportItemHeld = false;
+                playerSpeed = playerSpeedTemp;
             }
         }
 
