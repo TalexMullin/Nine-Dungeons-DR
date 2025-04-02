@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 7381434858189973281}
   - component: {fileID: 5788017875047533876}
   - component: {fileID: 3834955394485859957}
-  - component: {fileID: 2465860258201076458}
   - component: {fileID: 5495915707942503875}
+  - component: {fileID: 4428297239977095083}
   m_Layer: 11
   m_Name: BasicEnemy
-  m_TagString: Untagged
+  m_TagString: EnemyBasic
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -165,23 +165,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.57, y: 0.4}
   m_EdgeRadius: 0
---- !u!114 &2465860258201076458
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5596379225725011198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 055d5d793a97d4b468614f0bfcde123c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 2
-  moveVertical: 1
-  direction: 1
-  timerMin: 1
-  timerMax: 5
 --- !u!114 &5495915707942503875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,6 +186,19 @@ MonoBehaviour:
   - {fileID: 6600678949265597861, guid: c1499e2eeaf9d0847985b7ce788c1694, type: 3}
   - {fileID: 0}
   - {fileID: 0}
+--- !u!114 &4428297239977095083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5596379225725011198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17b2633ff9646ab408576354be821237, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 2
 --- !u!1 &6702892915028816662
 GameObject:
   m_ObjectHideFlags: 0

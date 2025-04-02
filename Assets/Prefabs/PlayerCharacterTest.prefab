@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3150088073862586625}
   m_Layer: 10
   m_Name: PlayerCharacterTest
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -233,6 +233,7 @@ MonoBehaviour:
   lanternLightPassive: {fileID: 6283143124070978884, guid: fd519e1e6dc68084ca7a9da46e6f8fc2, type: 3}
   lanternLightUse: {fileID: 5411506318014606037, guid: 6dd2275ab105285448cde7961586cbab, type: 3}
   maxLanternFuel: 100
+  shieldHealthLossOnBlock: 1
   swordPrefab: {fileID: 1041416049179850807, guid: 874a4d18f0cca5a469774a83650f0159, type: 3}
   attackCooldownAmount: 0.25
   swordDistanceDownOffset: 0.17
