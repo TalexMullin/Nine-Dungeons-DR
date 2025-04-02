@@ -9,6 +9,7 @@ public class EnemyHomingMovement : MonoBehaviour
     Vector2 playerPosition;
     GameObject target = null;
     public float moveSpeed = 2;
+    public float antiJitterVar = 0.075f;
     //Vector2 move;
 
 
@@ -55,20 +56,27 @@ public class EnemyHomingMovement : MonoBehaviour
             {   // if there is a target, move towards it
                 playerPosition = playerRigidbody2d.position;
                 // decide which direction to go
-                if (playerPosition.x > position.x)
+                if (Mathf.Abs(playerPosition.x - position.x) > antiJitterVar)
                 {
-                    position.x = position.x + moveSpeed * Time.deltaTime;
-                } else if (playerPosition.x < position.x)
-                {
-                    position.x = position.x - moveSpeed * Time.deltaTime;
+                    if (playerPosition.x > position.x)
+                    {
+                        position.x = position.x + moveSpeed * Time.deltaTime;
+                    }
+                    else if (playerPosition.x < position.x)
+                    {
+                        position.x = position.x - moveSpeed * Time.deltaTime;
+                    }
                 }
-                if (playerPosition.y > position.y)
+                if (Mathf.Abs(playerPosition.y - position.y) > antiJitterVar)
                 {
-                    position.y = position.y + moveSpeed * Time.deltaTime;
-                }
-                else if (playerPosition.y < position.y)
-                {
-                    position.y = position.y - moveSpeed * Time.deltaTime;
+                    if (playerPosition.y > position.y)
+                    {
+                        position.y = position.y + moveSpeed * Time.deltaTime;
+                    }
+                    else if (playerPosition.y < position.y)
+                    {
+                        position.y = position.y - moveSpeed * Time.deltaTime;
+                    }
                 }
             } else
             {   // otherwise, find the target
