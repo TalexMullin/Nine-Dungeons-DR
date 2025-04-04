@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     KeyCode supportItemSwitchKey = KeyCode.I;
     KeyCode pauseKey = KeyCode.Escape;
     KeyCode attackKey = KeyCode.Space;
+    KeyCode dodgeKey = KeyCode.K;
     private static bool _gamePaused = false;
     public static bool gamePaused
     {
@@ -107,6 +108,16 @@ public class PlayerController : MonoBehaviour
     public float swordDistanceLeftRight = 1.0f;
     public float initialSwingAngle = 0.0f;
 
+    [Header("DodgeRoll")]
+    public bool dodgeRollActive = false;
+    public float dodgeRollSpeed = 10.0f;
+    public float dodgeRollDurationTimer;
+    public float dodgeRollDurationAmount = 0.25f;
+    public float dodgeRollCooldownTimer;
+    public float dodgeRollCooldownAmount = 2.0f;
+    public bool dodgeRollOnCooldown = false;
+    
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     /*
@@ -143,8 +154,7 @@ public class PlayerController : MonoBehaviour
 
         if (!gamePaused)
         {
-            // halt movement if attacking
-            if (attackOnCooldown)
+            if (attackOnCooldown) // halt movement if attacking
             {
                 move = new Vector2(0, 0);
                 
@@ -211,7 +221,7 @@ public class PlayerController : MonoBehaviour
             {
                 PassiveIlluminate();
                 // ensure that the correct key is pressed and there is enough fuel. Divided by 4 to smooth out the process.
-                if (Input.GetKey(supportItemKey) && currentLanternFuel > 0 && attackCooldownTimer == 0)
+                if (Input.GetKey(supportItemKey) && currentLanternFuel > 0 && attackCooldownTimer == 0 && !dodgeRollActive)
                 {
                     Illuminate();
                     // drain lantern fuel
@@ -277,7 +287,7 @@ public class PlayerController : MonoBehaviour
 
 
             // attack with the sword
-            if (Input.GetKeyDown(attackKey) && !attackOnCooldown && !supportItemHeld)
+            if (Input.GetKeyDown(attackKey) && !attackOnCooldown && !supportItemHeld && !dodgeRollActive)
             {
                 Vector2 swordLocation = rigidbody2d.position;
                 float angle = initialSwingAngle;
@@ -359,8 +369,42 @@ public class PlayerController : MonoBehaviour
                     attackCooldownTimer = 0;
                 }
             }
+            // dodge roll
+            if (!dodgeRollActive && !dodgeRollOnCooldown && !supportItemHeld && !attackOnCooldown && Input.GetKeyDown(dodgeKey))
+            {
+                dodgeRollActive = true;
+            }
+            if (dodgeRollActive)
+            {
+                dodgeRollDurationTimer += Time.deltaTime;
+                if (dodgeRollDurationTimer >= dodgeRollDurationAmount)
+                {
+                    dodgeRollActive = false;
+                    dodgeRollDurationTimer = 0;
+                }
+            }
+
+            //TODO: dodge roll timer and setting
+            // need dodgeKey, dodgeTimer, dodgeDirection, dodgeBool
+            // also need to alter and reset base movement to 0 when rolling, making use of temp speed
+            // cannot be used if supportItemHeld is true
+
+            // implement the actual movement of the dodge roll.
 
         } // end (if !gamePaused)
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
 
 
         // reduce player movement speed while holding the lantern key, reset it on release
@@ -394,6 +438,9 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+
+
+
         // pause the game
         if (Input.GetKeyDown(pauseKey))
         {
@@ -416,8 +463,19 @@ public class PlayerController : MonoBehaviour
     {
         if (!gamePaused)
         {
+            Vector2 position;
+            float movementSpeed;
             // Movement
-            Vector2 position = (Vector2)rigidbody2d.position + move * playerSpeed * Time.deltaTime;
+            // check for dodge roll movement first, otherwise use normal movement.
+            if (dodgeRollActive)
+            {
+                movementSpeed = dodgeRollSpeed;
+            }
+            else
+            {
+                movementSpeed = playerSpeed;
+            }
+            position = (Vector2)rigidbody2d.position + move * movementSpeed * Time.deltaTime;
             rigidbody2d.MovePosition(position);
         }
     }
