@@ -108,14 +108,15 @@ public class PlayerController : MonoBehaviour
     public float swordDistanceLeftRight = 1.0f;
     public float initialSwingAngle = 0.0f;
 
-    [Header("DodgeRoll")]
-    public bool dodgeRollActive = false;
+
+    [Header("DodgeRollVariables")]
     public float dodgeRollSpeed = 10.0f;
-    public float dodgeRollDurationTimer;
+    bool dodgeRollActive = false;
+    float dodgeRollDurationTimer;
     public float dodgeRollDurationAmount = 0.25f;
-    public float dodgeRollCooldownTimer;
+    float dodgeRollCooldownTimer;
     public float dodgeRollCooldownAmount = 2.0f;
-    public bool dodgeRollOnCooldown = false;
+    bool dodgeRollOnCooldown = false;
     Vector2 dodgeMove;
     
 
@@ -386,10 +387,18 @@ public class PlayerController : MonoBehaviour
                 {
                     dodgeRollActive = false;
                     dodgeRollDurationTimer = 0;
+                    dodgeRollOnCooldown = true;
                 }
             }
-
-            // implement the actual movement of the dodge roll.
+            if (dodgeRollOnCooldown)
+            {
+                dodgeRollCooldownTimer += Time.deltaTime;
+                if (dodgeRollCooldownTimer >= dodgeRollCooldownAmount)
+                {
+                    dodgeRollOnCooldown = false;
+                    dodgeRollCooldownTimer = 0;
+                }
+            }
 
         } // end (if !gamePaused)
         //
