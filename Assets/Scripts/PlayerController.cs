@@ -116,6 +116,7 @@ public class PlayerController : MonoBehaviour
     public float dodgeRollCooldownTimer;
     public float dodgeRollCooldownAmount = 2.0f;
     public bool dodgeRollOnCooldown = false;
+    Vector2 dodgeMove;
     
 
 
@@ -198,6 +199,9 @@ public class PlayerController : MonoBehaviour
                         playerFacingHor = PlayerFaceHor.none;
                         break;
                 }
+                // assign x and y of move to dodgeMove
+                dodgeMove.x = move.x;
+                dodgeMove.y = move.y;
             }
             //Debug.Log("vertical direction: " + playerFacingVert +"\nhorizontal direction: " + playerFacingHor);
 
@@ -369,6 +373,7 @@ public class PlayerController : MonoBehaviour
                     attackCooldownTimer = 0;
                 }
             }
+
             // dodge roll
             if (!dodgeRollActive && !dodgeRollOnCooldown && !supportItemHeld && !attackOnCooldown && Input.GetKeyDown(dodgeKey))
             {
@@ -383,11 +388,6 @@ public class PlayerController : MonoBehaviour
                     dodgeRollDurationTimer = 0;
                 }
             }
-
-            //TODO: dodge roll timer and setting
-            // need dodgeKey, dodgeTimer, dodgeDirection, dodgeBool
-            // also need to alter and reset base movement to 0 when rolling, making use of temp speed
-            // cannot be used if supportItemHeld is true
 
             // implement the actual movement of the dodge roll.
 
@@ -464,18 +464,17 @@ public class PlayerController : MonoBehaviour
         if (!gamePaused)
         {
             Vector2 position;
-            float movementSpeed;
             // Movement
             // check for dodge roll movement first, otherwise use normal movement.
             if (dodgeRollActive)
             {
-                movementSpeed = dodgeRollSpeed;
+                position = (Vector2)rigidbody2d.position + dodgeMove * dodgeRollSpeed * Time.deltaTime;
             }
             else
             {
-                movementSpeed = playerSpeed;
+                position = (Vector2)rigidbody2d.position + move * playerSpeed * Time.deltaTime;
             }
-            position = (Vector2)rigidbody2d.position + move * movementSpeed * Time.deltaTime;
+
             rigidbody2d.MovePosition(position);
         }
     }
