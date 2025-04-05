@@ -379,6 +379,7 @@ public class PlayerController : MonoBehaviour
             if (!dodgeRollActive && !dodgeRollOnCooldown && !supportItemHeld && !attackOnCooldown && Input.GetKeyDown(dodgeKey))
             {
                 dodgeRollActive = true;
+                HUDHandler.instance.SetDodgeValue(0);   // alter HUD
             }
             if (dodgeRollActive)
             {
@@ -393,6 +394,7 @@ public class PlayerController : MonoBehaviour
             if (dodgeRollOnCooldown)
             {
                 dodgeRollCooldownTimer += Time.deltaTime;
+                HUDHandler.instance.SetDodgeValue(dodgeRollCooldownTimer / dodgeRollCooldownAmount);   // alter HUD
                 if (dodgeRollCooldownTimer >= dodgeRollCooldownAmount)
                 {
                     dodgeRollOnCooldown = false;

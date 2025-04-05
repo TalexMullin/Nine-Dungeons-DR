@@ -11,6 +11,7 @@ public class HUDHandler : MonoBehaviour
     private VisualElement m_Magicbar;
     private VisualElement m_Lanternbar;
     private VisualElement m_Shieldbar;
+    private VisualElement m_Dodgebar;
 
     private void Awake()
     {
@@ -39,6 +40,9 @@ public class HUDHandler : MonoBehaviour
 
         m_Shieldbar = uiDocument.rootVisualElement.Q<VisualElement>("ShieldBar");
         SetShieldValue(1.0f);
+
+        m_Dodgebar = uiDocument.rootVisualElement.Q<VisualElement>("DodgeBar");
+        SetDodgeValue(1.0f);
     }
 
     /*
@@ -92,5 +96,17 @@ public class HUDHandler : MonoBehaviour
     public void SetShieldValue(float percentage)
     {
         m_Shieldbar.style.width = Length.Percent(100 * percentage);
+    }
+
+    /*
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public void SetDodgeValue(float percentage)
+    {
+        m_Dodgebar.style.width = Length.Percent(100 * percentage);
     }
 }
