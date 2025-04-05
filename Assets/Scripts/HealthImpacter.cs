@@ -48,6 +48,11 @@ public class HealthImpacter : MonoBehaviour
                 if (controller != null)
                 {
                     controller.ChangeHealth(healthChangeAmount);
+
+                    // apply enemy knockback
+                    Vector2 direction = (controller.transform.position - transform.position).normalized;
+                    controller.GetComponent<Rigidbody2D>().AddForce(direction * knockbackSpeed, ForceMode2D.Impulse);
+                    controller.knockbackActive = true;
                 }
             }
         }

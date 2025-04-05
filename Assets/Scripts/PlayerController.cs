@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Knockback")]
     public bool knockbackActive = false;
-    float knockbackTimer;
+    public float knockbackTimer;
     public float knockbackAmount = 0.2f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
