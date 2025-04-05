@@ -153,7 +153,6 @@ public class PlayerController : MonoBehaviour
      */
     void Update()
     {
-
         if (!gamePaused)
         {
             if (attackOnCooldown) // halt movement if attacking

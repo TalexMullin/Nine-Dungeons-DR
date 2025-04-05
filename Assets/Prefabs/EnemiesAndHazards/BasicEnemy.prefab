@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5788017875047533876}
   - component: {fileID: 3834955394485859957}
   - component: {fileID: 5495915707942503875}
-  - component: {fileID: 4428297239977095083}
+  - component: {fileID: 702080155137774232}
   m_Layer: 11
   m_Name: BasicEnemy
   m_TagString: EnemyBasic
@@ -186,7 +186,7 @@ MonoBehaviour:
   - {fileID: 6600678949265597861, guid: c1499e2eeaf9d0847985b7ce788c1694, type: 3}
   - {fileID: 0}
   - {fileID: 0}
---- !u!114 &4428297239977095083
+--- !u!114 &702080155137774232
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -195,10 +195,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 5596379225725011198}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17b2633ff9646ab408576354be821237, type: 3}
+  m_Script: {fileID: 11500000, guid: bf25bf366e73c1d40a3f508fa7ba9948, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementType: 1
   moveSpeed: 2
+  moveVertical: 1
+  direction: 1
+  timerMin: 1
+  timerMax: 5
   antiJitterVar: 0.1
 --- !u!1 &6702892915028816662
 GameObject:

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Splines;
 
 public class EnemyHomingMovement : MonoBehaviour
 {
@@ -10,7 +9,6 @@ public class EnemyHomingMovement : MonoBehaviour
     GameObject target = null;
     public float moveSpeed = 2;
     public float antiJitterVar = 0.075f;
-    //Vector2 move;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

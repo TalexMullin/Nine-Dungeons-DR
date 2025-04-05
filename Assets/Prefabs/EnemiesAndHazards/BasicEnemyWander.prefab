@@ -8,9 +8,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 702080155137774232, guid: d29193c5462a8714d9a348f1d9c8c0fd, type: 3}
+      propertyPath: movementType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5596379225725011198, guid: d29193c5462a8714d9a348f1d9c8c0fd, type: 3}
       propertyPath: m_Name
-      value: BasicEnemy Variant
+      value: BasicEnemyWander
       objectReference: {fileID: 0}
     - target: {fileID: 7103779835506281924, guid: d29193c5462a8714d9a348f1d9c8c0fd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -60,30 +64,5 @@ PrefabInstance:
     - {fileID: 4428297239977095083, guid: d29193c5462a8714d9a348f1d9c8c0fd, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5596379225725011198, guid: d29193c5462a8714d9a348f1d9c8c0fd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 104633857630489115}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d29193c5462a8714d9a348f1d9c8c0fd, type: 3}
---- !u!1 &2479666972677221029 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5596379225725011198, guid: d29193c5462a8714d9a348f1d9c8c0fd, type: 3}
-  m_PrefabInstance: {fileID: 8053525440692137563}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &104633857630489115
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2479666972677221029}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 055d5d793a97d4b468614f0bfcde123c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 2
-  moveVertical: 1
-  direction: 1
-  timerMin: 1
-  timerMax: 5
