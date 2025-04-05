@@ -178,7 +178,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 10
-  currentHealth: 0
   timeInvincible: 0
   itemDropsList:
   - {fileID: 4896097355387262042, guid: 4b5e65daba591a0489a878af94c3343f, type: 3}
@@ -186,6 +185,7 @@ MonoBehaviour:
   - {fileID: 6600678949265597861, guid: c1499e2eeaf9d0847985b7ce788c1694, type: 3}
   - {fileID: 0}
   - {fileID: 0}
+  knockbackSpeed: 1
 --- !u!114 &702080155137774232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,11 +200,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementType: 1
   moveSpeed: 2
-  moveVertical: 1
   direction: 1
   timerMin: 1
   timerMax: 5
   antiJitterVar: 0.1
+  knockbackActive: 0
+  knockbackAmount: 0.2
 --- !u!1 &6702892915028816662
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,3 +355,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enterOrNot: 0
   healthChangeAmount: -5
+  knockbackSpeed: 1

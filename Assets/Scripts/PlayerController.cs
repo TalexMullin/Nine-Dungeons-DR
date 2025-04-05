@@ -118,8 +118,11 @@ public class PlayerController : MonoBehaviour
     public float dodgeRollCooldownAmount = 2.0f;
     bool dodgeRollOnCooldown = false;
     Vector2 dodgeMove;
-    
 
+    [Header("Knockback")]
+    public bool knockbackActive = false;
+    float knockbackTimer;
+    public float knockbackAmount = 0.2f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     /*
@@ -155,54 +158,71 @@ public class PlayerController : MonoBehaviour
     {
         if (!gamePaused)
         {
-            if (attackOnCooldown) // halt movement if attacking
+            if (!knockbackActive) // ensure that player is not being knocked back
             {
-                move = new Vector2(0, 0);
-                
-            } else
-            {
-                move = MoveAction.ReadValue<Vector2>();
-            }
-            //Debug.Log(move);
-            if (!Mathf.Approximately(move.x, 0.0f) || !Mathf.Approximately(move.y, 0.0f))
-            {
-                moveDirection.Set(move.x, move.y);
-                moveDirection.Normalize();
-            }
-            // determine approximately which direction the player is facing
-            // ensure the player is not standing still before changing direction
-            // this way, the player is still marked as facing a direction
-            if (!(move.y == 0 && move.x == 0)) {
-                // find player vertical direction
-                switch (move.y)
+                if (attackOnCooldown) // halt movement if attacking
                 {
-                    case < 0:
-                        playerFacingVert = PlayerFaceVert.down;
-                        break;
-                    case > 0:
-                        playerFacingVert = PlayerFaceVert.up;
-                        break;
-                    default:
-                        playerFacingVert = PlayerFaceVert.none;
-                        break;
+                    move = new Vector2(0, 0);
+
                 }
-                // find player horizontal direction
-                switch (move.x)
+                else
                 {
-                    case < 0:
-                        playerFacingHor = PlayerFaceHor.left;
-                        break;
-                    case > 0:
-                        playerFacingHor = PlayerFaceHor.right;
-                        break;
-                    default:
-                        playerFacingHor = PlayerFaceHor.none;
-                        break;
+                    move = MoveAction.ReadValue<Vector2>();
                 }
-                // assign x and y of move to dodgeMove
-                dodgeMove.x = move.x;
-                dodgeMove.y = move.y;
+                //Debug.Log(move);
+                if (!Mathf.Approximately(move.x, 0.0f) || !Mathf.Approximately(move.y, 0.0f))
+                {
+                    moveDirection.Set(move.x, move.y);
+                    moveDirection.Normalize();
+                }
+                // determine approximately which direction the player is facing
+                // ensure the player is not standing still before changing direction
+                // this way, the player is still marked as facing a direction
+                if (!(move.y == 0 && move.x == 0))
+                {
+                    // find player vertical direction
+                    switch (move.y)
+                    {
+                        case < 0:
+                            playerFacingVert = PlayerFaceVert.down;
+                            break;
+                        case > 0:
+                            playerFacingVert = PlayerFaceVert.up;
+                            break;
+                        default:
+                            playerFacingVert = PlayerFaceVert.none;
+                            break;
+                    }
+                    // find player horizontal direction
+                    switch (move.x)
+                    {
+                        case < 0:
+                            playerFacingHor = PlayerFaceHor.left;
+                            break;
+                        case > 0:
+                            playerFacingHor = PlayerFaceHor.right;
+                            break;
+                        default:
+                            playerFacingHor = PlayerFaceHor.none;
+                            break;
+                    }
+                    // assign x and y of move to dodgeMove
+                    dodgeMove.x = move.x;
+                    dodgeMove.y = move.y;
+                }
             }
+
+            // knockback timer
+            if (knockbackActive)
+            {
+                knockbackTimer += Time.deltaTime;
+                if (knockbackTimer >= knockbackAmount)
+                {
+                    knockbackActive = false;
+                    knockbackTimer = 0;
+                }
+            }
+
             //Debug.Log("vertical direction: " + playerFacingVert +"\nhorizontal direction: " + playerFacingHor);
 
             //supportItemHeld = useLanternShield.ReadValue<bool>();
@@ -473,19 +493,22 @@ public class PlayerController : MonoBehaviour
     {
         if (!gamePaused)
         {
-            Vector2 position;
-            // Movement
-            // check for dodge roll movement first, otherwise use normal movement.
-            if (dodgeRollActive)
+            if (!knockbackActive)
             {
-                position = (Vector2)rigidbody2d.position + dodgeMove * dodgeRollSpeed * Time.deltaTime;
-            }
-            else
-            {
-                position = (Vector2)rigidbody2d.position + move * playerSpeed * Time.deltaTime;
-            }
+                Vector2 position;
+                // Movement
+                // check for dodge roll movement first, otherwise use normal movement.
+                if (dodgeRollActive)
+                {
+                    position = (Vector2)rigidbody2d.position + dodgeMove * dodgeRollSpeed * Time.deltaTime;
+                }
+                else
+                {
+                    position = (Vector2)rigidbody2d.position + move * playerSpeed * Time.deltaTime;
+                }
 
-            rigidbody2d.MovePosition(position);
+                rigidbody2d.MovePosition(position);
+            }
         }
     }
 

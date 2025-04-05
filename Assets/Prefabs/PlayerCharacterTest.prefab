@@ -241,13 +241,11 @@ MonoBehaviour:
   swordDistanceDown: 0.43
   swordDistanceLeftRight: 0.33
   initialSwingAngle: 60
-  dodgeRollActive: 0
   dodgeRollSpeed: 14
-  dodgeRollDurationTimer: 0
   dodgeRollDurationAmount: 0.2
-  dodgeRollCooldownTimer: 0
   dodgeRollCooldownAmount: 2
-  dodgeRollOnCooldown: 0
+  knockbackActive: 0
+  knockbackAmount: 0.2
 --- !u!1 &5961912955571688422
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,8 +22,12 @@ public class EnemyController : MonoBehaviour
     float moveTimerIncrement = 0.0f;
     float moveTimer = 2.5f;
     public float antiJitterVar = 0.075f;
-    
 
+    [Header("Knockback")]
+    public bool knockbackActive = false; // public so that HealthImpacterEnemy can use it
+    float knockbackTimer;
+    public float knockbackAmount = 0.2f;
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     /*
@@ -78,6 +82,17 @@ public class EnemyController : MonoBehaviour
                  * there is nothing here for homing movement
                  */
             }
+
+            // knockback timer
+            if (knockbackActive)
+            {
+                knockbackTimer += Time.deltaTime;
+                if (knockbackTimer >= knockbackAmount)
+                {
+                    knockbackActive = false;
+                    knockbackTimer = 0;
+                }
+            }
         }
     }
 
@@ -92,63 +107,67 @@ public class EnemyController : MonoBehaviour
     {
         if (!PlayerController.gamePaused)
         {
-            Vector2 position = rigidbody2d.position;
-            /* random movement
-             * 
-             */
-            if (movementType == MoveType.randomWander)
+            if (!knockbackActive)
             {
-
-
-                // determine movement
-                if (moveVertical)
-                {
-                    position.y = position.y + moveSpeed * direction * Time.deltaTime;
-                }
-                else
-                {
-                    position.x = position.x + moveSpeed * direction * Time.deltaTime;
-                }
-
-                /* homing movement
+                Vector2 position = rigidbody2d.position;
+                /* random movement
                  * 
                  */
-            } else if (movementType == MoveType.homing)
-            {
-                if (target != null)
-                {   // if there is a target, move towards it
-                    playerPosition = playerRigidbody2d.position;
-                    // decide which direction to go
-                    if (Mathf.Abs(playerPosition.x - position.x) > antiJitterVar)
+                if (movementType == MoveType.randomWander)
+                {
+
+
+                    // determine movement
+                    if (moveVertical)
                     {
-                        if (playerPosition.x > position.x)
+                        position.y = position.y + moveSpeed * direction * Time.deltaTime;
+                    }
+                    else
+                    {
+                        position.x = position.x + moveSpeed * direction * Time.deltaTime;
+                    }
+
+                    /* homing movement
+                     * 
+                     */
+                }
+                else if (movementType == MoveType.homing)
+                {
+                    if (target != null)
+                    {   // if there is a target, move towards it
+                        playerPosition = playerRigidbody2d.position;
+                        // decide which direction to go
+                        if (Mathf.Abs(playerPosition.x - position.x) > antiJitterVar)
                         {
-                            position.x = position.x + moveSpeed * Time.deltaTime;
+                            if (playerPosition.x > position.x)
+                            {
+                                position.x = position.x + moveSpeed * Time.deltaTime;
+                            }
+                            else if (playerPosition.x < position.x)
+                            {
+                                position.x = position.x - moveSpeed * Time.deltaTime;
+                            }
                         }
-                        else if (playerPosition.x < position.x)
+                        if (Mathf.Abs(playerPosition.y - position.y) > antiJitterVar)
                         {
-                            position.x = position.x - moveSpeed * Time.deltaTime;
+                            if (playerPosition.y > position.y)
+                            {
+                                position.y = position.y + moveSpeed * Time.deltaTime;
+                            }
+                            else if (playerPosition.y < position.y)
+                            {
+                                position.y = position.y - moveSpeed * Time.deltaTime;
+                            }
                         }
                     }
-                    if (Mathf.Abs(playerPosition.y - position.y) > antiJitterVar)
-                    {
-                        if (playerPosition.y > position.y)
-                        {
-                            position.y = position.y + moveSpeed * Time.deltaTime;
-                        }
-                        else if (playerPosition.y < position.y)
-                        {
-                            position.y = position.y - moveSpeed * Time.deltaTime;
-                        }
+                    else
+                    {   // otherwise, find the target
+                        target = GameObject.FindWithTag("Player");
+                        playerRigidbody2d = target.GetComponent<Rigidbody2D>();
                     }
                 }
-                else
-                {   // otherwise, find the target
-                    target = GameObject.FindWithTag("Player");
-                    playerRigidbody2d = target.GetComponent<Rigidbody2D>();
-                }
-            }
-            rigidbody2d.MovePosition(position);
+                rigidbody2d.MovePosition(position);
+            } // end (!knockbackActive);
         }
     }
 }
