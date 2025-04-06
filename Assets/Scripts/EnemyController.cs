@@ -89,6 +89,7 @@ public class EnemyController : MonoBehaviour
                 knockbackTimer += Time.deltaTime;
                 if (knockbackTimer >= knockbackAmount)
                 {
+                    rigidbody2d.linearVelocity = Vector2.zero;
                     knockbackActive = false;
                     knockbackTimer = 0;
                 }

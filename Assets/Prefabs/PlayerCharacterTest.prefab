@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 1223944630295066976}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.06, y: -2.58, z: 0}
+  m_LocalPosition: {x: -0.113, y: -2.534, z: 0}
   m_LocalScale: {x: 1.0000148, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -152,7 +152,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.0095, y: -0.17}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -162,7 +162,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.57, y: 0.4}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &3150088073862586625
 MonoBehaviour:
@@ -236,15 +236,16 @@ MonoBehaviour:
   shieldHealthLossOnBlock: 1
   swordPrefab: {fileID: 1041416049179850807, guid: 874a4d18f0cca5a469774a83650f0159, type: 3}
   attackCooldownAmount: 0.25
-  swordDistanceDownOffset: 0.17
-  swordDistanceUp: 0.1
-  swordDistanceDown: 0.43
-  swordDistanceLeftRight: 0.33
+  swordDistanceDownOffset: 0
+  swordDistanceUp: 0.3
+  swordDistanceDown: 0.3
+  swordDistanceLeftRight: 0.3
   initialSwingAngle: 60
   dodgeRollSpeed: 14
   dodgeRollDurationAmount: 0.2
   dodgeRollCooldownAmount: 2
   knockbackActive: 0
+  knockbackTimer: 0
   knockbackAmount: 0.2
 --- !u!1 &5961912955571688422
 GameObject:

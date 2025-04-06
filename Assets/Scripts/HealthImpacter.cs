@@ -13,17 +13,7 @@ public class HealthImpacter : MonoBehaviour
         {
             if (enterOrNot)
             {
-                PlayerController controller = collision.GetComponent<PlayerController>();
-
-                if (controller != null)
-                {
-                    controller.ChangeHealth(healthChangeAmount);
-
-                    // apply enemy knockback
-                    Vector2 direction = (controller.transform.position - transform.position).normalized;
-                    controller.GetComponent<Rigidbody2D>().AddForce(direction * knockbackSpeed, ForceMode2D.Impulse);
-                    controller.knockbackActive = true;
-                }
+                ImpactHealth(collision);
             }
         }
     }
@@ -43,18 +33,23 @@ public class HealthImpacter : MonoBehaviour
         {
             if (!enterOrNot)
             {
-                PlayerController controller = collision.GetComponent<PlayerController>();
-
-                if (controller != null)
-                {
-                    controller.ChangeHealth(healthChangeAmount);
-
-                    // apply enemy knockback
-                    Vector2 direction = (controller.transform.position - transform.position).normalized;
-                    controller.GetComponent<Rigidbody2D>().AddForce(direction * knockbackSpeed, ForceMode2D.Impulse);
-                    controller.knockbackActive = true;
-                }
+                ImpactHealth(collision);
             }
+        }
+    }
+
+    private void ImpactHealth(Collider2D collision)
+    {
+        PlayerController controller = collision.GetComponent<PlayerController>();
+
+        if (controller != null)
+        {
+        controller.ChangeHealth(healthChangeAmount);
+
+        // apply knockback
+        Vector2 direction = (controller.transform.position - transform.position).normalized;
+        controller.GetComponent<Rigidbody2D>().AddForce(direction * knockbackSpeed, ForceMode2D.Impulse);
+        controller.knockbackActive = true;
         }
     }
 }

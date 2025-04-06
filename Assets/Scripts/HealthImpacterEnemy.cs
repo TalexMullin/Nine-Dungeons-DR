@@ -13,48 +13,36 @@ public class HealthImpacterEnemy : MonoBehaviour
         {
             if (enterOrNot)
             {
-                EnemyHealthController controller = collision.GetComponent<EnemyHealthController>();
-                EnemyController toKnockback = collision.GetComponent<EnemyController>();
-
-                if (controller != null)
-                {
-                    controller.ChangeHealth(healthChangeAmount);
-                    PlayerController.ChangeShieldHealth(PlayerController.shieldHealthGainOnSwordAttack);
-
-                    // apply knockback
-                    Vector2 direction = (toKnockback.transform.position - transform.position).normalized;
-                    toKnockback.GetComponent<Rigidbody2D>().AddForce(direction * knockbackSpeed, ForceMode2D.Impulse);
-                    toKnockback.knockbackActive = true;
-                }
-
-
+                ImpactHealth(collision);
             }
         }
     }
 
-
-
-    /*
-     *
-     *
-     *
-     *
-     *
-     */
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (!PlayerController.gamePaused)
         {
             if (!enterOrNot)
             {
-                EnemyHealthController controller = collision.GetComponent<EnemyHealthController>();
-
-                if (controller != null)
-                {
-                    controller.ChangeHealth(healthChangeAmount);
-                    PlayerController.ChangeShieldHealth(PlayerController.shieldHealthGainOnSwordAttack);
-                }
+                ImpactHealth(collision);
             }
+        }
+    }
+
+    private void ImpactHealth(Collider2D collision)
+    {
+        EnemyHealthController controller = collision.GetComponent<EnemyHealthController>();
+        EnemyController toKnockback = collision.GetComponent<EnemyController>();
+
+        if (controller != null)
+        {
+            controller.ChangeHealth(healthChangeAmount);
+            PlayerController.ChangeShieldHealth(PlayerController.shieldHealthGainOnSwordAttack);
+
+            // apply knockback
+            Vector2 direction = (toKnockback.transform.position - transform.position).normalized;
+            toKnockback.GetComponent<Rigidbody2D>().AddForce(direction * knockbackSpeed, ForceMode2D.Impulse);
+            toKnockback.knockbackActive = true;
         }
     }
 }

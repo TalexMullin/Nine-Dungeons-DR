@@ -17,9 +17,6 @@ public class EnemyHealthController : MonoBehaviour
     GameObject itemDrop;
     public GameObject[] itemDropsList;
 
-    // knockback
-    public float knockbackSpeed = 1.0f;
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -37,7 +34,6 @@ public class EnemyHealthController : MonoBehaviour
             if (isInvincible)
             {
                 damageCooldown -= Time.deltaTime;
-                //rigidbody2d.AddForce(new Vector2(-1, 0) * knockbackSpeed, ForceMode2D.Impulse); //
                 if (damageCooldown < 0)
                 {
                     isInvincible = false;
