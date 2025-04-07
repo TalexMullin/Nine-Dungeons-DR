@@ -108,6 +108,11 @@ public class PlayerController : MonoBehaviour
     public float swordDistanceLeftRight = 1.0f;
     public float initialSwingAngle = 0.0f;
 
+    [Header("ShieldVariables")]
+    public float shieldDistanceDownOffset = 0.0f;
+    public float shieldDistanceUp = 1.0f;
+    public float shieldDistanceDown = 1.0f;
+    public float shieldDistanceLeftRight = 1.0f;
 
     [Header("DodgeRollVariables")]
     public float dodgeRollSpeed = 10.0f;
@@ -259,12 +264,17 @@ public class PlayerController : MonoBehaviour
                     }
                 }
 
-            }
             /* TODO: currently, there are several issues with how I have programmed things.
              * primarily is the way the lantern light follows the player.
              * Currently, I am creating and destroying a LanternLightHeld Prefab every frame
              * This works, but could be optimized to actually follow the player.
             */
+
+            } else if (!lanternEquipped)
+            {
+
+            }
+
 
 
             // for determining if lantern fuel regens or not
@@ -291,12 +301,6 @@ public class PlayerController : MonoBehaviour
                     lanternEquipped = true;
                 }
             }
-
-
-            // for shield mechanics
-            /* TODO: add shield mechanics here.
-             * 
-            */
 
 
             // for passive magic regeneration
