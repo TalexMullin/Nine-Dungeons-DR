@@ -233,8 +233,10 @@ MonoBehaviour:
   lanternLightPassive: {fileID: 6283143124070978884, guid: fd519e1e6dc68084ca7a9da46e6f8fc2, type: 3}
   lanternLightUse: {fileID: 5411506318014606037, guid: 6dd2275ab105285448cde7961586cbab, type: 3}
   maxLanternFuel: 100
-  shieldHealthLossOnBlock: 1
+  maxShieldHealth: 4
   swordPrefab: {fileID: 1041416049179850807, guid: 874a4d18f0cca5a469774a83650f0159, type: 3}
+  shieldPrefab: {fileID: 2652233490446892158, guid: eda225216a5450f4c95e51784e98d9a3, type: 3}
+  shieldActive: 0
   attackCooldownAmount: 0.25
   swordDistanceDownOffset: 0
   swordDistanceUp: 0.3
@@ -242,9 +244,9 @@ MonoBehaviour:
   swordDistanceLeftRight: 0.3
   initialSwingAngle: 60
   shieldDistanceDownOffset: 0
-  shieldDistanceUp: 1
-  shieldDistanceDown: 1
-  shieldDistanceLeftRight: 1
+  shieldDistanceUp: 0.6
+  shieldDistanceDown: 0.6
+  shieldDistanceLeftRight: 0.6
   dodgeRollSpeed: 14
   dodgeRollDurationAmount: 0.2
   dodgeRollCooldownAmount: 2

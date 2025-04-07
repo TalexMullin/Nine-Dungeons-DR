@@ -23359,26 +23359,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerCharacterTest
       objectReference: {fileID: 0}
-    - target: {fileID: 3150088073862586625, guid: ecedfea7cace15f449c914ef88cad4e7, type: 3}
-      propertyPath: shieldPrefab
-      value: 
-      objectReference: {fileID: 2652233490446892158, guid: eda225216a5450f4c95e51784e98d9a3, type: 3}
-    - target: {fileID: 3150088073862586625, guid: ecedfea7cace15f449c914ef88cad4e7, type: 3}
-      propertyPath: knockbackActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3150088073862586625, guid: ecedfea7cace15f449c914ef88cad4e7, type: 3}
-      propertyPath: shieldDistanceUp
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 3150088073862586625, guid: ecedfea7cace15f449c914ef88cad4e7, type: 3}
-      propertyPath: shieldDistanceDown
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 3150088073862586625, guid: ecedfea7cace15f449c914ef88cad4e7, type: 3}
-      propertyPath: shieldDistanceLeftRight
-      value: 0.6
-      objectReference: {fileID: 0}
     - target: {fileID: 5195350173547996830, guid: ecedfea7cace15f449c914ef88cad4e7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -49.06
