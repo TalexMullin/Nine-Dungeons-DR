@@ -1,4 +1,5 @@
 using System;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -71,7 +72,7 @@ public class PlayerController : MonoBehaviour
     bool isInvincible;
     float damageCooldown;
 
-    [Header("Lantern and Shield")]
+    [Header("Lantern")]
     // lantern
     //public InputAction useLanternShield;
     bool lanternEquipped = false; // true means the lantern is equipped, false means the shield is equipped.
@@ -89,7 +90,7 @@ public class PlayerController : MonoBehaviour
     // shield
     public static float maxShieldHealth = 4.0f;
     static float currentShieldHealth;
-    public float shieldHealthLossOnBlock = 1.0f;   // lose one block upon blocking
+    public static float shieldHealthLossOnBlock = -1.0f;   // lose one block upon blocking
     public static float shieldHealthGainOnSwordAttack = 0.25f;
 
 
@@ -97,6 +98,9 @@ public class PlayerController : MonoBehaviour
     // combat
     public GameObject swordPrefab;
     GameObject sword;
+    public GameObject shieldPrefab;
+    GameObject shield;
+    public bool shieldActive = false;
     public float attackCooldownAmount = 0.5f;
     float attackCooldownTimer = 0;
     bool attackOnCooldown = false;
@@ -144,7 +148,7 @@ public class PlayerController : MonoBehaviour
         currentHealth = maxHealth;
         currentMagic = 0;  // TODO: set to maxMagic once magic items are available
         currentLanternFuel = maxLanternFuel;
-        currentShieldHealth = 0.0f;//maxShieldHealth;
+        currentShieldHealth = maxShieldHealth;
 
         //useLanternShield.Enable();
     }
@@ -251,7 +255,7 @@ public class PlayerController : MonoBehaviour
             {
                 PassiveIlluminate();
                 // ensure that the correct key is pressed and there is enough fuel. Divided by 4 to smooth out the process.
-                if (Input.GetKey(supportItemKey) && currentLanternFuel > 0 && attackCooldownTimer == 0 && !dodgeRollActive)
+                if (Input.GetKey(supportItemKey) && currentLanternFuel > 0 && !attackOnCooldown && !dodgeRollActive)
                 {
                     Illuminate();
                     // drain lantern fuel
@@ -272,10 +276,74 @@ public class PlayerController : MonoBehaviour
 
             } else if (!lanternEquipped)
             {
+                if (Input.GetKeyDown(supportItemKey) && currentShieldHealth >= shieldHealthLossOnBlock
+                    && !attackOnCooldown && !dodgeRollActive)
+                {
+                    Vector2 shieldLocation = rigidbody2d.position;
+                    float angle = 0;
+                    // get shield location
+                    switch (playerFacingVert)
+                    {
+                        case PlayerFaceVert.up:
+                            shieldLocation.y += shieldDistanceUp;
+                            break;
+                        case PlayerFaceVert.down:
+                            shieldLocation.y -= shieldDistanceDown;
+                            break;
+                        // offset for if the player is facing straight left or stright right
+                        case PlayerFaceVert.none:
+                            shieldLocation.y -= shieldDistanceDownOffset;
+                            break;
+                    }
+                    switch (playerFacingHor)
+                    {
+                        case PlayerFaceHor.right:
+                            shieldLocation.x += shieldDistanceLeftRight;
+                            break;
+                        case PlayerFaceHor.left:
+                            shieldLocation.x -= shieldDistanceLeftRight;
+                            break;
+                    }
 
+                    // get angle
+                    if (playerFacingHor == PlayerFaceHor.left)
+                    {
+                        if (playerFacingVert == PlayerFaceVert.up) // angle left up
+                        {
+                            angle += 45.0f;
+                        }
+                        else if (playerFacingVert == PlayerFaceVert.down) // angle left down
+                        {
+                            angle += 135.0f;
+                        }
+                        else // angle straight left
+                        {
+                            angle += 90.0f;
+                        }
+                    }
+                    else if (playerFacingHor == PlayerFaceHor.right)
+                    {
+                        if (playerFacingVert == PlayerFaceVert.up) // angle right up
+                        {
+                            angle += 315.0f;
+                        }
+                        else if (playerFacingVert == PlayerFaceVert.down) // angle right down
+                        {
+                            angle += 225.0f;
+                        }
+                        else // angle right
+                        {
+                            angle += 270.0f;
+                        }
+                    }
+                    else if (playerFacingVert == PlayerFaceVert.down) // angle down
+                    {
+                        angle += 180.0f;
+                    }
+                    // nothing for angle down, as it is the default
+                    shield = Instantiate(shieldPrefab, shieldLocation, Quaternion.Euler(0, 0, angle)) as GameObject;
+                }
             }
-
-
 
             // for determining if lantern fuel regens or not
             if (((lanternEquipped && !supportItemHeld) || !lanternEquipped) && (currentLanternFuel < maxLanternFuel))
@@ -321,7 +389,6 @@ public class PlayerController : MonoBehaviour
                 Vector2 swordLocation = rigidbody2d.position;
                 float angle = initialSwingAngle;
                 float swingAngle = -2 * angle;
-                // TODO: change sword location based off of player direction
                 // get sword location
                 switch (playerFacingVert)
                 {
@@ -458,6 +525,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // halt player movement speed while holding the shield key, reset it on release
+        // also, change shieldActive to true or false so that shield can be destroyed when appropriate
         if (!lanternEquipped)
         {
             if (Input.GetKeyDown(supportItemKey))
@@ -465,11 +533,13 @@ public class PlayerController : MonoBehaviour
                 supportItemHeld = true;
                 playerSpeedTemp = playerSpeed;
                 playerSpeed = 0;
+                shieldActive = true;
             }
             if (Input.GetKeyUp(supportItemKey))
             {
                 supportItemHeld = false;
                 playerSpeed = playerSpeedTemp;
+                shieldActive = false;
             }
         }
 
@@ -578,7 +648,7 @@ public class PlayerController : MonoBehaviour
     {
         currentShieldHealth = Mathf.Clamp(currentShieldHealth + amount, 0, maxShieldHealth);
         HUDHandler.instance.SetShieldValue(currentShieldHealth / maxShieldHealth);
-        Debug.Log("Shield health is at " + currentShieldHealth + "/" + maxShieldHealth);
+        //Debug.Log("Shield health is at " + currentShieldHealth + "/" + maxShieldHealth);
     }
 
 
@@ -596,8 +666,6 @@ public class PlayerController : MonoBehaviour
         HUDHandler.instance.SetLanternValue(currentLanternFuel / (float)maxLanternFuel);
         //Debug.Log("Lantern Fuel is " + currentLanternFuel + "/" + maxLanternFuel);
     }
-
-
 
     // functions used to create light from the lantern
     /*
@@ -635,4 +703,6 @@ public class PlayerController : MonoBehaviour
         }
         return integer;
     }
+
+
 }

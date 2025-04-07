@@ -6,6 +6,13 @@ public class HealthImpacterEnemy : MonoBehaviour
     public bool enterOrNot = true; // determins if ontriggerenter or ontriggerstay runs.
     public int healthChangeAmount = -5;
     public float knockbackSpeed = 1;
+    public enum TypeOfItem
+    {
+        sword,
+        shield,
+        other
+    }
+    public TypeOfItem itemType = TypeOfItem.other;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -37,7 +44,19 @@ public class HealthImpacterEnemy : MonoBehaviour
         if (controller != null)
         {
             controller.ChangeHealth(healthChangeAmount);
-            PlayerController.ChangeShieldHealth(PlayerController.shieldHealthGainOnSwordAttack);
+
+            // decide what to do with shield health
+            switch (itemType) {
+                case TypeOfItem.sword:
+                    PlayerController.ChangeShieldHealth(PlayerController.shieldHealthGainOnSwordAttack);
+                    break;
+                case TypeOfItem.shield:
+                    PlayerController.ChangeShieldHealth(PlayerController.shieldHealthLossOnBlock);
+                    break;
+                default:
+                    break;
+            }
+            
 
             // apply knockback
             Vector2 direction = (toKnockback.transform.position - transform.position).normalized;
