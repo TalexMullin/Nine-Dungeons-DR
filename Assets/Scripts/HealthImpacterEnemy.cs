@@ -40,6 +40,7 @@ public class HealthImpacterEnemy : MonoBehaviour
     {
         EnemyHealthController controller = collision.GetComponent<EnemyHealthController>();
         EnemyController toKnockback = collision.GetComponent<EnemyController>();
+        PlayerController playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
 
         if (controller != null)
         {
@@ -48,10 +49,10 @@ public class HealthImpacterEnemy : MonoBehaviour
             // decide what to do with shield health
             switch (itemType) {
                 case TypeOfItem.sword:
-                    PlayerController.ChangeShieldHealth(PlayerController.shieldHealthGainOnSwordAttack);
+                    playerController.ChangeShieldHealth(PlayerController.shieldHealthGainOnSwordAttack);
                     break;
                 case TypeOfItem.shield:
-                    PlayerController.ChangeShieldHealth(PlayerController.shieldHealthLossOnBlock);
+                    playerController.ChangeShieldHealth(PlayerController.shieldHealthLossOnBlock);
                     break;
                 default:
                     break;

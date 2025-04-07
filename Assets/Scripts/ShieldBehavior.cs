@@ -4,6 +4,8 @@ public class ShieldBehavior : MonoBehaviour
 {
     GameObject playerObject;
     PlayerController playerConScript;
+    float currentShieldHealth;
+    float maxShieldHealth;
     private void Awake()
     {
         playerObject = GameObject.FindGameObjectWithTag("Player");

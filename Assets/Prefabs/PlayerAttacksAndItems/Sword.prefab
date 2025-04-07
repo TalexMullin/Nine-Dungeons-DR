@@ -194,5 +194,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enterOrNot: 1
   healthChangeAmount: -5
-  knockbackSpeed: 1
+  knockbackSpeed: 5
   itemType: 0

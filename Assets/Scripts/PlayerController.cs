@@ -88,8 +88,8 @@ public class PlayerController : MonoBehaviour
     //float lanternNoLightCooldown = 0;
 
     // shield
-    public static float maxShieldHealth = 4.0f;
-    static float currentShieldHealth;
+    public float maxShieldHealth = 4.0f;
+    float currentShieldHealth;
     public static float shieldHealthLossOnBlock = -1.0f;   // lose one block upon blocking
     public static float shieldHealthGainOnSwordAttack = 0.25f;
 
@@ -276,7 +276,7 @@ public class PlayerController : MonoBehaviour
 
             } else if (!lanternEquipped)
             {
-                if (Input.GetKeyDown(supportItemKey) && currentShieldHealth >= shieldHealthLossOnBlock
+                if (Input.GetKeyDown(supportItemKey) && currentShieldHealth >= Math.Abs(shieldHealthLossOnBlock)
                     && !attackOnCooldown && !dodgeRollActive)
                 {
                     Vector2 shieldLocation = rigidbody2d.position;
@@ -610,6 +610,7 @@ public class PlayerController : MonoBehaviour
             }
             isInvincible = true;
             damageCooldown = timeInvincible;
+            shieldActive = false;
         }
 
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
@@ -644,10 +645,14 @@ public class PlayerController : MonoBehaviour
      *
      *
      */
-    public static void ChangeShieldHealth(float amount)
+    public void ChangeShieldHealth(float amount)
     {
         currentShieldHealth = Mathf.Clamp(currentShieldHealth + amount, 0, maxShieldHealth);
         HUDHandler.instance.SetShieldValue(currentShieldHealth / maxShieldHealth);
+        if (currentShieldHealth < Math.Abs(shieldHealthLossOnBlock))
+        {
+            shieldActive = false;
+        }
         //Debug.Log("Shield health is at " + currentShieldHealth + "/" + maxShieldHealth);
     }
 
