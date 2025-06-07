@@ -9,12 +9,10 @@ public class HealthImpacter : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!PlayerController.gamePaused)
+
+        if (enterOrNot)
         {
-            if (enterOrNot)
-            {
-                ImpactHealth(collision);
-            }
+            ImpactHealth(collision);
         }
     }
 
@@ -29,12 +27,10 @@ public class HealthImpacter : MonoBehaviour
      */
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (!PlayerController.gamePaused)
+
+        if (!enterOrNot)
         {
-            if (!enterOrNot)
-            {
-                ImpactHealth(collision);
-            }
+            ImpactHealth(collision);
         }
     }
 

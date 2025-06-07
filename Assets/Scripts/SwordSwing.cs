@@ -12,15 +12,12 @@ public class SwordSwing : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!PlayerController.gamePaused)
-        {
 
-            swingTimer += Time.deltaTime;
-            gameObject.transform.eulerAngles = new Vector3(0, 0, initialAngle + swingTimer * (degreesToSwing / swingDuration));
-            if (swingTimer >= swingDuration)
-            {
-                Destroy(gameObject);
-            }
+        swingTimer += Time.deltaTime;
+        gameObject.transform.eulerAngles = new Vector3(0, 0, initialAngle + swingTimer * (degreesToSwing / swingDuration));
+        if (swingTimer >= swingDuration)
+        {
+            Destroy(gameObject);
         }
     }
 

@@ -23,22 +23,6 @@ public class EnemyHomingMovement : MonoBehaviour
     }
 
 
-    // Update is called once per frame
-    /*
-     * 
-     * 
-     * 
-     */
-    void Update()
-    {
-        if (!PlayerController.gamePaused)
-        {
-
-
-        }
-    }
-
-
     // FixedUpdate
     /*
      * 
@@ -47,8 +31,7 @@ public class EnemyHomingMovement : MonoBehaviour
      */
     private void FixedUpdate()
     {
-        if (!PlayerController.gamePaused)
-        {
+
             Vector2 position = rigidbody2d.position;
             if (target != null)
             {   // if there is a target, move towards it
@@ -83,6 +66,6 @@ public class EnemyHomingMovement : MonoBehaviour
             }
 
                 rigidbody2d.MovePosition(position);
-        }
+
     }
 }

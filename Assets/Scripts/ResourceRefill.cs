@@ -9,8 +9,7 @@ public class ResourceRefill : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!PlayerController.gamePaused)
-        {
+
             PlayerController controller = collision.GetComponent<PlayerController>();
             if (controller != null)
             {
@@ -28,6 +27,5 @@ public class ResourceRefill : MonoBehaviour
                 }
                 Destroy(gameObject);
             }
-        } // end if (!PlayerController.gamePaused)
     }
 }

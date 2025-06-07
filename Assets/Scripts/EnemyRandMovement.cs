@@ -33,8 +33,7 @@ public class EnemyRandMovement : MonoBehaviour
      */
     void Update()
     {
-        if (!PlayerController.gamePaused)
-        {
+
             // increment moveTimerIncrement, then reset and decide new moveVertical, direction, and moveTimer
             moveTimerIncrement += Time.deltaTime;
             if (moveTimerIncrement >= moveTimer)
@@ -57,8 +56,6 @@ public class EnemyRandMovement : MonoBehaviour
                     moveVertical = false;
                 }
             }
-
-        }
     }
 
 
@@ -70,8 +67,7 @@ public class EnemyRandMovement : MonoBehaviour
      */
     private void FixedUpdate()
     {
-        if (!PlayerController.gamePaused)
-        {
+
             Vector2 position = rigidbody2d.position;
 
             // determine movement
@@ -84,6 +80,5 @@ public class EnemyRandMovement : MonoBehaviour
                 position.x = position.x + moveSpeed * direction * Time.deltaTime;
             }
             rigidbody2d.MovePosition(position);
-        }
     }
 }

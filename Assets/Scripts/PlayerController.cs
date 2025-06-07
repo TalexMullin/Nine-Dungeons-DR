@@ -22,21 +22,9 @@ public class PlayerController : MonoBehaviour
     // TODO: these are hard coded at the moment, later controls should be customizable
     KeyCode supportItemKey = KeyCode.J;
     KeyCode supportItemSwitchKey = KeyCode.I;
-    KeyCode pauseKey = KeyCode.Escape;
+    // KeyCode pauseKey = KeyCode.Escape;
     KeyCode attackKey = KeyCode.Space;
     KeyCode dodgeKey = KeyCode.K;
-    private static bool _gamePaused = false;
-    public static bool gamePaused
-    {
-        get
-        {
-            return _gamePaused;
-        }
-        set
-        {
-            _gamePaused = value;
-        }
-    }
 
 
     // Movement
@@ -165,8 +153,6 @@ public class PlayerController : MonoBehaviour
      */
     void Update()
     {
-        if (!gamePaused)
-        {
             if (!knockbackActive) // ensure that player is not being knocked back
             {
                 if (attackOnCooldown) // halt movement if attacking
@@ -492,8 +478,6 @@ public class PlayerController : MonoBehaviour
                     dodgeRollCooldownTimer = 0;
                 }
             }
-
-        } // end (if !gamePaused)
         //
         //
         //
@@ -543,14 +527,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-
-
-
-        // pause the game
-        if (Input.GetKeyDown(pauseKey))
-        {
-            if (gamePaused) { gamePaused = false; } else if (!gamePaused) { gamePaused = true; }
-        }
     }
 
 
@@ -566,8 +542,7 @@ public class PlayerController : MonoBehaviour
      */
     private void FixedUpdate()
     {
-        if (!gamePaused)
-        {
+
             if (!knockbackActive)
             {
                 Vector2 position;
@@ -584,7 +559,6 @@ public class PlayerController : MonoBehaviour
 
                 rigidbody2d.MovePosition(position);
             }
-        }
     }
 
 
